@@ -9,6 +9,9 @@ import android.graphics.RectF;
 import com.facedetection.camerax.GraphicOverlay;
 import com.google.mlkit.vision.face.Face;
 
+/**
+ * A graphic class for drawing the face contour on a graphic overlay.
+ */
 public class FaceContourGraphic extends GraphicOverlay.Graphic {
 
 
@@ -19,6 +22,13 @@ public class FaceContourGraphic extends GraphicOverlay.Graphic {
     private final Paint idPaint;
     private final Paint boxPaint;
 
+    /**
+     * Creates a FaceContourGraphic instance.
+     *
+     * @param overlay   The graphic overlay for drawing the face contour.
+     * @param face      The face object containing face data.
+     * @param imageRect The rectangular region of interest in the input image.
+     */
     public FaceContourGraphic(GraphicOverlay overlay, Face face, Rect imageRect) {
         super(overlay);
         this.face = face;
@@ -50,10 +60,6 @@ public class FaceContourGraphic extends GraphicOverlay.Graphic {
     }
 
     private static final float BOX_STROKE_WIDTH = 5.0f;
-
-
-
-
 
 
 }

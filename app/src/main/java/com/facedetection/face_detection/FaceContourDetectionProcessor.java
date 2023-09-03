@@ -27,6 +27,9 @@ import com.google.mlkit.vision.face.FaceLandmark;
 
 import java.util.List;
 
+/**
+ * An image analyzer for face contour detection and gaze tracking.
+ */
 public class FaceContourDetectionProcessor extends BaseImageAnalyzer<List<Face>> {
     private Context context;
     private GazeViewModel viewModel;
@@ -36,6 +39,12 @@ public class FaceContourDetectionProcessor extends BaseImageAnalyzer<List<Face>>
     private final FaceDetectorOptions realTimeOpts;
     private final FaceDetector detector;
 
+    /**
+     * Constructs a FaceContourDetectionProcessor.
+     *
+     * @param view      The graphic overlay for drawing face contours.
+     * @param viewModel The ViewModel for gaze-related data.
+     */
     public FaceContourDetectionProcessor(GraphicOverlay view, GazeViewModel viewModel) {
         this.view = view;
         this.viewModel = viewModel;
@@ -72,6 +81,7 @@ public class FaceContourDetectionProcessor extends BaseImageAnalyzer<List<Face>>
         graphicOverlay.postInvalidate();
 
     }
+
     private String formatGazePoint(PointF gazePoint) {
         return "Gaze Point: (" + gazePoint.x + ", " + gazePoint.y + ")";
     }
@@ -99,19 +109,18 @@ public class FaceContourDetectionProcessor extends BaseImageAnalyzer<List<Face>>
                                             FaceLandmark rightEyeLandmark = face.getLandmark(FaceLandmark.RIGHT_EYE);
                                             if (leftEyeLandmark != null && rightEyeLandmark != null) {
                                                 PointF leftEyePosition = leftEyeLandmark.getPosition();
-                                                Log.d(TAG, "left"+leftEyePosition);
+                                                Log.d(TAG, "left" + leftEyePosition);
                                                 PointF rightEyePosition = rightEyeLandmark.getPosition();
-                                                Log.d(TAG, " right"+rightEyePosition);
+                                                Log.d(TAG, " right" + rightEyePosition);
                                                 Vector3 gazeVector = calculateGazeVector(leftEyePosition, rightEyePosition);
                                                 PointF mappedGazeVector = mapGazeVectorToScreenCoordinates(gazeVector);
                                                 PointF gazePoint = calculateGazePoint(mappedGazeVector);
-                                                if(gazePoint.x!=0 && gazePoint.y!=0&&viewModel != null) {
+                                                if (gazePoint.x != 0 && gazePoint.y != 0 && viewModel != null) {
                                                     viewModel.setGazePoint(formatGazePoint(gazePoint));
-                                                    Log.d(TAG, "Gaze point :" +formatGazePoint(gazePoint));
-                                                }
-                                                else{
+                                                    Log.d(TAG, "Gaze point :" + formatGazePoint(gazePoint));
+                                                } else {
                                                     viewModel.setGazePoint("No Eye Detected");
-                                                    Log.e(TAG,"No Eye Detected");
+                                                    Log.e(TAG, "No Eye Detected");
                                                 }
                                             } else {
 
@@ -188,7 +197,6 @@ public class FaceContourDetectionProcessor extends BaseImageAnalyzer<List<Face>>
         float gazePointY = mappedGazeVector.y * screenHeight;
         if (gazePointX > 0 && gazePointY > 0) {
             return new PointF(gazePointX, gazePointY);
-        }
-        else return new PointF(0,0);
+        } else return new PointF(0, 0);
     }
 }

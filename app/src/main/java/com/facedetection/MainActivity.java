@@ -1,4 +1,5 @@
 package com.facedetection;
+
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -12,7 +13,9 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.facedetection.camerax.CameraManager;
 
-
+/**
+ * The main activity of the face detection application.
+ */
 public class MainActivity extends AppCompatActivity {
     private TextView gazePointTextView;
 
@@ -24,11 +27,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         gazePointTextView = findViewById(R.id.gazePointTextView);
+
+        // Initialize the ViewModel
         viewModel = new ViewModelProvider(this).get(GazeViewModel.class);
+
+        // Initialize the ViewModel
         createCameraManager(viewModel);
+
+        // Check for camera permission and start the camera if granted
         checkForPermission();
+
+        // Setup click listener for camera switch button
         onClicks();
 
+        // Observe changes in the gaze point and update the UI accordingly
         viewModel.getGazePoint().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String gazePoint) {
@@ -43,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    // Check for camera permission and start the camera if granted
     private void checkForPermission() {
         if (allPermissionsGranted()) {
             cameraManager.startCamera();
@@ -55,9 +68,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // Set up click listener for the camera switch button
     private void onClicks() {
         findViewById(R.id.btnSwitch).setOnClickListener(view -> cameraManager.changeCameraSelector());
     }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
@@ -73,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // Create and initialize the CameraManager with the ViewModel
     private void createCameraManager(GazeViewModel viewModel) {
         cameraManager = new CameraManager(
                 this,
@@ -83,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
         );
     }
 
+    // Check if all required permissions are granted
     private boolean allPermissionsGranted() {
         for (String permission : REQUIRED_PERMISSIONS) {
             if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {

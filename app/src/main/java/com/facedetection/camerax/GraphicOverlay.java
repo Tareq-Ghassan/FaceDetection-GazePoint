@@ -14,6 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+/**
+ * A custom view used for overlaying graphics on camera preview.
+ */
 public class GraphicOverlay extends View {
 
     private final Object lock = new Object();
@@ -27,16 +30,31 @@ public class GraphicOverlay extends View {
         super(context, attrs);
     }
 
+    /**
+     * Checks if the camera is in front-facing mode.
+     *
+     * @return True if the camera is in front-facing mode, false otherwise.
+     */
     public boolean isFrontMode() {
         return cameraSelector == CameraSelector.LENS_FACING_FRONT;
     }
 
+    /**
+     * Checks if the camera is in front-facing mode.
+     *
+     * @return True if the camera is in front-facing mode, false otherwise.
+     */
     public void toggleSelector() {
         cameraSelector = (cameraSelector == CameraSelector.LENS_FACING_BACK)
                 ? CameraSelector.LENS_FACING_FRONT
                 : CameraSelector.LENS_FACING_BACK;
     }
 
+    /**
+     * Checks if the camera is in front-facing mode.
+     *
+     * @return True if the camera is in front-facing mode, false otherwise.
+     */
     public void clear() {
         synchronized (lock) {
             graphics.clear();
@@ -44,12 +62,22 @@ public class GraphicOverlay extends View {
         postInvalidate();
     }
 
+    /**
+     * Checks if the camera is in front-facing mode.
+     *
+     * @return True if the camera is in front-facing mode, false otherwise.
+     */
     public void add(Graphic graphic) {
         synchronized (lock) {
             graphics.add(graphic);
         }
     }
 
+    /**
+     * Removes a graphic from the overlay.
+     *
+     * @param graphic The graphic to remove.
+     */
     public void remove(Graphic graphic) {
         synchronized (lock) {
             graphics.remove(graphic);
@@ -71,6 +99,9 @@ public class GraphicOverlay extends View {
         }
     }
 
+    /**
+     * A base class for graphics to be drawn on the overlay.
+     */
     public abstract static class Graphic {
 
         private final GraphicOverlay overlay;
@@ -79,14 +110,28 @@ public class GraphicOverlay extends View {
             this.overlay = overlay;
         }
 
+        /**
+         * Draws the graphic on the canvas.
+         *
+         * @param canvas The canvas to draw on.
+         * @throws Exception If an error occurs during drawing.
+         */
         public abstract void draw(Canvas canvas) throws Exception;
 
-
+        /**
+         * Calculates the rectangle coordinates for the graphic based on various factors.
+         *
+         * @param height       The height of the graphic.
+         * @param width        The width of the graphic.
+         * @param boundingBoxT The bounding box to map.
+         * @return A RectF object representing the calculated rectangle.
+         * @throws Exception If an error occurs during calculation.
+         */
         public RectF calculateRect(float height, float width, Rect boundingBoxT) throws Exception {
 
             // for landscape
             Callable<Boolean> isLandscapeMode = () -> {
-               boolean  v= overlay.getContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
+                boolean v = overlay.getContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
                 return v;
             };
 

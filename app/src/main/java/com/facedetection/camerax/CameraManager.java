@@ -1,4 +1,5 @@
 package com.facedetection.camerax;
+
 import android.content.Context;
 import android.util.Log;
 
@@ -19,7 +20,9 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-
+/**
+ * Manages the camera and image analysis for face detection.
+ */
 public class CameraManager {
     private GazeViewModel viewModel;
     private Context context;
@@ -36,6 +39,16 @@ public class CameraManager {
 
     private static final String TAG = "CameraXBasic";
 
+
+    /**
+     * Constructor for CameraManager.
+     *
+     * @param context        The Android context.
+     * @param finderView     The PreviewView for camera preview.
+     * @param lifecycleOwner The lifecycle owner for camera components.
+     * @param graphicOverlay The graphic overlay for drawing face contours.
+     * @param viewModel      The ViewModel for gaze-related data.
+     */
     public CameraManager(
             Context context,
             PreviewView finderView,
@@ -54,6 +67,9 @@ public class CameraManager {
         cameraExecutor = Executors.newSingleThreadExecutor();
     }
 
+    /**
+     * Starts the camera and sets up image analysis.
+     */
     public void startCamera() {
         ListenableFuture<ProcessCameraProvider> cameraProviderFuture = ProcessCameraProvider.getInstance(context);
         cameraProviderFuture.addListener(() -> {
@@ -95,9 +111,12 @@ public class CameraManager {
     }
 
     private ImageAnalysis.Analyzer selectAnalyzer() {
-        return new FaceContourDetectionProcessor(graphicOverlay,viewModel);
+        return new FaceContourDetectionProcessor(graphicOverlay, viewModel);
     }
 
+    /**
+     * Changes the camera selector (front/back camera).
+     */
     public void changeCameraSelector() {
         cameraProvider.unbindAll();
         cameraSelectorOption = (cameraSelectorOption == CameraSelector.LENS_FACING_BACK) ?
