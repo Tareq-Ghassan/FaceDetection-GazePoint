@@ -38,8 +38,8 @@ it proceeds to calculate the gaze point.
 https://drive.google.com/file/d/1gXo4yceQTww4hI5zgYV7oBvWIEw0lSWn/view?usp=sharing
 
 # Contact Me:
-If you have any questions, feedback, or inquiries, please don't hesitate to get in touch with us. We're here to assist you!
+If you have any questions, feedback, or inquiries, please don't hesitate to get in touch with me. I'm here to assist you!
 
 Linkedin: www.linkedin.com/in/tareq-abu-saleh-3b5374203
 
-Feel free to use the contact details provided above, and we'll respond as soon as possible. Your input is valuable to us, and we look forward to hearing from you.
+Feel free to use the contact details provided above, and I'll respond as soon as possible. Your input is valuable to me, and I look forward to hearing from you.
