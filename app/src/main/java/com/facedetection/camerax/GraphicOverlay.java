@@ -40,9 +40,7 @@ public class GraphicOverlay extends View {
     }
 
     /**
-     * Checks if the camera is in front-facing mode.
-     *
-     * @return True if the camera is in front-facing mode, false otherwise.
+     * Toggles between front and back camera modes.
      */
     public void toggleSelector() {
         cameraSelector = (cameraSelector == CameraSelector.LENS_FACING_BACK)
@@ -51,9 +49,7 @@ public class GraphicOverlay extends View {
     }
 
     /**
-     * Checks if the camera is in front-facing mode.
-     *
-     * @return True if the camera is in front-facing mode, false otherwise.
+     * Clears all graphics from the overlay.
      */
     public void clear() {
         synchronized (lock) {
@@ -63,9 +59,9 @@ public class GraphicOverlay extends View {
     }
 
     /**
-     * Checks if the camera is in front-facing mode.
+     * Adds a graphic to the overlay.
      *
-     * @return True if the camera is in front-facing mode, false otherwise.
+     * @param graphic The graphic to add.
      */
     public void add(Graphic graphic) {
         synchronized (lock) {
