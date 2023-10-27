@@ -40,6 +40,6 @@ https://drive.google.com/file/d/1gXo4yceQTww4hI5zgYV7oBvWIEw0lSWn/view?usp=shari
 # Contact Me:
 If you have any questions, feedback, or inquiries, please don't hesitate to get in touch with me. I'm here to assist you!
 
-Linkedin: www.linkedin.com/in/tareq-abu-saleh-3b5374203
+Linkedin: www.linkedin.com/in/Tareq-ghassan
 
 Feel free to use the contact details provided above, and I'll respond as soon as possible. Your input is valuable to me, and I look forward to hearing from you.
