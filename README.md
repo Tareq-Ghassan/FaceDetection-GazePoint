@@ -37,6 +37,10 @@ it proceeds to calculate the gaze point.
 # Sample Video:
 https://drive.google.com/file/d/1gXo4yceQTww4hI5zgYV7oBvWIEw0lSWn/view?usp=sharing
 
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE) file for details.
+
 # Contact Me:
 If you have any questions, feedback, or inquiries, please don't hesitate to get in touch with me. I'm here to assist you!
 
