@@ -1,10 +1,10 @@
-// swift-tools-version:6.0
+// swift-tools-version:6.3
 import PackageDescription
 
 let package = Package(
     name: "GazePointSDK",
     platforms: [
-        .iOS(.v16),
+        .iOS(.v26),
         .macOS(.v13)
     ],
     products: [

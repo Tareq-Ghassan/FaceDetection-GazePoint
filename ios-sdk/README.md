@@ -15,9 +15,9 @@ Advanced eye tracking and gaze point detection SDK for iOS applications using Ap
 
 ## Requirements
 
-- iOS 16.0+
-- Xcode 15.0+
-- Swift 6.0+
+- iOS 26.6+
+- Xcode 27.0+ (beta) or Xcode 26.6 (stable with Swift 6.3.3)
+- Swift 6.3.3+
 - Device with front-facing camera
 - Camera access permission
 

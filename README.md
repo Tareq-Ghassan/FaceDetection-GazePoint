@@ -63,7 +63,7 @@ Gaze points are the fundamental units of measurement in eye tracking. Each gaze 
 #### iOS
 - Vision framework integration for native performance
 - ARKit support for enhanced accuracy (coming soon)
-- Swift 6.0 with modern concurrency
+- Swift 6.3.3 with modern concurrency
 - SwiftUI and UIKit compatible
 
 #### Flutter
@@ -79,8 +79,8 @@ Gaze points are the fundamental units of measurement in eye tracking. Each gaze 
 | Platform | Version | Technologies | Status |
 |----------|---------|--------------|--------|
 | **Android** | API 24+ (Android 7.0+) | Kotlin, CameraX, ML Kit | ✅ Stable |
-| **iOS** | iOS 16.0+ | Swift 6.0, Vision, ARKit | ✅ Stable |
-| **Flutter** | Flutter 3.24+ | Dart 3.5+, Platform Channels | ✅ Stable |
+| **iOS** | iOS 26.6+ | Swift 6.3.3, Vision, ARKit | ✅ Stable |
+| **Flutter** | Flutter 3.44.7+ | Dart 3.5+, Platform Channels | ✅ Stable |
 
 ---
 

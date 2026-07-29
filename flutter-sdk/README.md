@@ -20,7 +20,7 @@ Cross-platform Flutter plugin for eye tracking and gaze point detection on Andro
 | Platform | Minimum Version | Requirements |
 |----------|----------------|--------------|
 | Android  | API 24 (Android 7.0) | Front camera, Google Play Services |
-| iOS      | iOS 16.0 | Front camera, Face ID capable device (recommended) |
+| iOS      | iOS 26.6 | Front camera, Face ID capable device (recommended) |
 
 ## Installation
 
