@@ -26,7 +26,3 @@ plugins {
 
 include(":app")
 
-// Local GazePoint Android SDK (same pattern as android_example)
-include(":gazepoint-sdk")
-project(":gazepoint-sdk").projectDir = file("../../android/gazepoint-sdk")
-

@@ -31,9 +31,6 @@ target 'Runner' do
 
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
 
-  # Local GazePoint iOS SDK (same role as ios_example → ../ios)
-  pod 'GazePointSDK', :path => '../../ios'
-
   target 'RunnerTests' do
     inherit! :search_paths
   end
