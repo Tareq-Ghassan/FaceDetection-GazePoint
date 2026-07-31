@@ -93,37 +93,36 @@ Gaze points are the fundamental units of measurement in eye tracking. Each gaze 
 
 #### Installation
 
-Add to your `app/build.gradle`:
+Local module (same pattern as `ios_example` → `ios`):
 
 ```gradle
+// settings.gradle
+include ':gazepoint-sdk'
+project(':gazepoint-sdk').projectDir = new File(settingsDir, '../android/gazepoint-sdk')
+
+// app/build.gradle
 dependencies {
-    implementation 'com.gazepoint:android-sdk:2.0.0'
+    implementation project(':gazepoint-sdk')
 }
 ```
+
+Or open the ready-made host app: [`android_example/`](android_example/).
 
 #### Basic Usage
 
 ```kotlin
-import com.facedetection.gaze.GazeTracker
+import com.gazepoint.sdk.GazeTracker
 
-class MainActivity : AppCompatActivity() {
-    private val gazeTracker = GazeTracker(this)
-    
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        
-        // Setup camera and face detection
-        val result = gazeTracker.calculateGazePoint(face)
-        result?.let {
-            Log.d("Gaze", "Point: ${it.gazePoint}")
-            Log.d("Gaze", "Confidence: ${it.confidence}")
-            Log.d("Gaze", "Blinking: ${it.isBlinking}")
-        }
-    }
+val gazeTracker = GazeTracker(context)
+val result = gazeTracker.calculateGazePoint(face)
+result?.let {
+    Log.d("Gaze", "Point: ${it.gazePoint}")
+    Log.d("Gaze", "Confidence: ${it.confidence}")
+    Log.d("Gaze", "Blinking: ${it.isBlinking}")
 }
 ```
 
-📖 [Full Android Documentation](android/README.md)
+📖 [Full Android Documentation](android/README.md) · [Example app](android_example/README.md)
 
 </details>
 
@@ -315,14 +314,12 @@ SDK automatically selects primary face (largest, closest to center, or tracked).
 - 🤖 [Android SDK Documentation](android/README.md)
 - 🍎 [iOS SDK Documentation](ios/README.md)
 - 🎯 [Flutter Plugin Documentation](flutter/README.md)
+- 📱 [Flutter Example App](flutter_example/README.md)
 
 ### Additional Resources
 
 - 📘 [Submodules Setup Guide](SUBMODULES_SETUP.md) - Working with Git submodules
-- 🔧 [API Reference](docs/API.md) - Detailed API documentation (coming soon)
-- 📊 [Performance Tuning](docs/PERFORMANCE.md) - Optimization guide (coming soon)
-- 🎨 [UI Integration Examples](examples/) - Sample applications (coming soon)
-- 🧪 [Testing Guide](docs/TESTING.md) - Unit and integration testing (coming soon)
+- 🎨 Native demos: [android_example](android_example/) · [ios_example](ios_example/)
 
 ---
 
@@ -332,22 +329,20 @@ This repository uses Git submodules to organize platform-specific SDKs:
 
 ```
 GazePointSDK/
-├── android/          → GazePointSDK-Android (submodule)
-│   ├── app/
-│   ├── build.gradle
-│   └── README.md
-├── ios/              → GazePointSDK-iOS (submodule)
+├── android/              → GazePointSDK-Android (native library)
+│   └── gazepoint-sdk/
+├── android_example/      → Native Android demo host
+├── ios/                  → GazePointSDK-iOS (Swift package + podspec)
 │   ├── Sources/
-│   ├── Package.swift
-│   └── README.md
-├── flutter/          → GazePointSDK-Flutter (submodule)
+│   └── Package.swift
+├── ios_example/          → Native iOS demo host
+├── flutter/              → Flutter plugin wrapper over native SDKs
 │   ├── lib/
-│   ├── pubspec.yaml
-│   └── README.md
-├── docs/             → Documentation
-├── examples/         → Sample applications
-├── .gitignore
-├── README.md         → This file
+│   ├── android/
+│   ├── ios/
+│   └── pubspec.yaml
+├── flutter_example/      → Flutter demo host (path → ../flutter)
+├── README.md
 ├── LICENSE
 └── SUBMODULES_SETUP.md
 ```

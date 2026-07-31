@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GazePoint Example</string>
+    <string name="switch_camera">Switch camera</string>
+    <string name="gaze_point_placeholder">Gaze Point: —</string>
+    <string name="demo_title">GazePoint SDK Demo</string>
+    <string name="point_camera_hint">Point the front camera at your face.</string>
+    <string name="gaze_detail_format">Gaze: (%1$.0f, %2$.0f)  Confidence: %3$.0f%%</string>
+    <string name="head_pose_format">Head  pitch: %1$.1f  yaw: %2$.1f  roll: %3$.1f</string>
+</resources>
