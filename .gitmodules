@@ -1,0 +1,9 @@
+[submodule "android"]
+	path = android
+	url = https://github.com/Tareq-Ghassan/GazePointSDK-Android.git
+[submodule "ios"]
+	path = ios
+	url = https://github.com/Tareq-Ghassan/GazePointSDK-iOS.git
+[submodule "flutter"]
+	path = flutter
+	url = https://github.com/Tareq-Ghassan/GazePointSDK-Flutter.git
