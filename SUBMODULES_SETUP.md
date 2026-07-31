@@ -1,303 +1,136 @@
 # Git Submodules Setup Guide
 
-This repository uses Git submodules to organize platform-specific SDKs. This guide explains how to set up and work with the submodules.
+This umbrella repository ([FaceDetection-GazePoint](https://github.com/Tareq-Ghassan/FaceDetection-GazePoint)) uses Git submodules for the platform SDKs.
 
 ## Repository Structure
 
 ```
-GazePointSDK/
-├── android/          (submodule → GazePointSDK-Android)
-├── ios/              (submodule → GazePointSDK-iOS)
-├── flutter/          (submodule → GazePointSDK-Flutter)
-├── .gitignore
+FaceDetection-GazePoint/          (umbrella)
+├── android/          → https://github.com/Tareq-Ghassan/GazePointSDK-Android.git
+├── ios/              → https://github.com/Tareq-Ghassan/GazePointSDK-iOS.git
+├── flutter/          → https://github.com/Tareq-Ghassan/GazePointSDK-Flutter.git
+├── android_example/  (lives in umbrella)
+├── ios_example/      (lives in umbrella)
+├── flutter_example/  (lives in umbrella)
+├── .gitmodules
 ├── README.md
 ├── LICENSE
-└── SUBMODULES_SETUP.md (this file)
+└── SUBMODULES_SETUP.md
 ```
 
-## Initial Setup Steps
+## Initial Setup (already done for this project)
 
-### 1. Create Separate Repositories
+Submodules are declared in `.gitmodules`:
 
-First, create three separate repositories on GitHub:
-
-1. `GazePointSDK-Android` - Android SDK repository
-2. `GazePointSDK-iOS` - iOS SDK repository
-3. `GazePointSDK-Flutter` - Flutter SDK repository
-
-### 2. Move Platform Code to Separate Repos
-
-#### For Android:
-
-```bash
-# In a new directory
-git clone https://github.com/yourusername/GazePointSDK.git temp-android
-cd temp-android
-
-# Keep only Android code
-git filter-branch --subdirectory-filter app -- --all
-# Or use git-filter-repo (recommended):
-git filter-repo --path app/ --path build.gradle --path gradle/ --path settings.gradle
-
-# Push to Android repo
-git remote set-url origin https://github.com/yourusername/GazePointSDK-Android.git
-git push -u origin main
-
-cd ..
-rm -rf temp-android
+```gitconfig
+[submodule "android"]
+	path = android
+	url = https://github.com/Tareq-Ghassan/GazePointSDK-Android.git
+[submodule "ios"]
+	path = ios
+	url = https://github.com/Tareq-Ghassan/GazePointSDK-iOS.git
+[submodule "flutter"]
+	path = flutter
+	url = https://github.com/Tareq-Ghassan/GazePointSDK-Flutter.git
 ```
 
-#### For iOS:
+If you are recreating this layout from scratch:
 
 ```bash
-# In a new directory
-git clone https://github.com/yourusername/GazePointSDK.git temp-ios
-cd temp-ios
-
-# Keep only iOS code
-git filter-repo --path ios-sdk/
-
-# Push to iOS repo
-git remote set-url origin https://github.com/yourusername/GazePointSDK-iOS.git
-git push -u origin main
-
-cd ..
-rm -rf temp-ios
-```
-
-#### For Flutter:
-
-```bash
-# In a new directory
-git clone https://github.com/yourusername/GazePointSDK.git temp-flutter
-cd temp-flutter
-
-# Keep only Flutter code
-git filter-repo --path flutter-sdk/
-
-# Push to Flutter repo
-git remote set-url origin https://github.com/yourusername/GazePointSDK-Flutter.git
-git push -u origin main
-
-cd ..
-rm -rf temp-flutter
-```
-
-### 3. Add Submodules to Main Repository
-
-In the main GazePointSDK repository:
-
-```bash
-# Remove the platform directories (they'll be added as submodules)
-git rm -rf app/ build.gradle gradle/ settings.gradle gradle.properties gradlew gradlew.bat
-git rm -rf ios-sdk/
-git rm -rf flutter-sdk/
-git commit -m "chore: remove platform code in preparation for submodules"
-
-# Add submodules
-git submodule add https://github.com/yourusername/GazePointSDK-Android.git android
-git submodule add https://github.com/yourusername/GazePointSDK-iOS.git ios
-git submodule add https://github.com/yourusername/GazePointSDK-Flutter.git flutter
-
-# Commit the submodules
+git submodule add https://github.com/Tareq-Ghassan/GazePointSDK-Android.git android
+git submodule add https://github.com/Tareq-Ghassan/GazePointSDK-iOS.git ios
+git submodule add https://github.com/Tareq-Ghassan/GazePointSDK-Flutter.git flutter
 git add .gitmodules android ios flutter
 git commit -m "chore: add platform SDKs as submodules"
-
-# Push changes
-git push origin main
 ```
 
-## Working with Submodules
-
-### Cloning the Repository with Submodules
+## Cloning with Submodules
 
 ```bash
-# Clone with all submodules
-git clone --recurse-submodules https://github.com/yourusername/GazePointSDK.git
+git clone --recurse-submodules https://github.com/Tareq-Ghassan/FaceDetection-GazePoint.git
 
-# Or if you already cloned without submodules:
-git clone https://github.com/yourusername/GazePointSDK.git
-cd GazePointSDK
-git submodule init
-git submodule update
+# Or if already cloned without submodules:
+cd FaceDetection-GazePoint
+git submodule update --init --recursive
 ```
 
-### Updating Submodules
-
-#### Update all submodules to latest:
+## Updating Submodules
 
 ```bash
+# All submodules to latest remote commits on their tracked branches
 git submodule update --remote --merge
-```
 
-#### Update a specific submodule:
-
-```bash
+# One submodule
 cd android
+git checkout main
 git pull origin main
 cd ..
 git add android
 git commit -m "chore: update Android submodule"
-git push
 ```
 
-### Making Changes in Submodules
-
-When you make changes in a submodule:
+## Making Changes in a Submodule
 
 ```bash
-# Go to the submodule directory
-cd android
-
-# Make changes, commit them
+cd android   # or ios / flutter
+git checkout main
+# edit, then:
 git add .
-git commit -m "feat: add new feature"
-
-# Push to the submodule repository
+git commit -m "feat: describe change"
 git push origin main
 
-# Go back to main repository
 cd ..
-
-# Update the submodule reference in main repo
 git add android
-git commit -m "chore: update Android submodule reference"
-git push
+git commit -m "chore: bump Android submodule"
+git push origin main
 ```
 
-### Creating a New Branch Across All Repos
+## Common Commands
 
 ```bash
-# Create feature branch in main repo
-git checkout -b feature/new-feature
-
-# Create matching branch in each submodule
-cd android && git checkout -b feature/new-feature && cd ..
-cd ios && git checkout -b feature/new-feature && cd ..
-cd flutter && git checkout -b feature/new-feature && cd ..
-
-# Make changes, commit, push
-# ...
-
-# Push all branches
-git push origin feature/new-feature
-cd android && git push origin feature/new-feature && cd ..
-cd ios && git push origin feature/new-feature && cd ..
-cd flutter && git push origin feature/new-feature && cd ..
-```
-
-## Common Commands Cheat Sheet
-
-```bash
-# Clone with submodules
-git clone --recurse-submodules <repo-url>
-
-# Initialize submodules (if cloned without --recurse-submodules)
-git submodule init
-git submodule update
-
-# Update all submodules to latest
-git submodule update --remote --merge
-
-# Update specific submodule
-cd <submodule-dir>
-git pull origin main
-cd ..
-git add <submodule-dir>
-git commit -m "chore: update <submodule> submodule"
-
-# Check submodule status
 git submodule status
-
-# See what changed in submodules
 git diff --submodule
-
-# Execute command in all submodules
+git submodule foreach 'git status -sb'
 git submodule foreach 'git pull origin main'
-
-# Remove a submodule
-git submodule deinit -f <submodule-path>
-git rm -f <submodule-path>
-rm -rf .git/modules/<submodule-path>
 ```
 
 ## Troubleshooting
 
-### Submodule is detached HEAD
+### Detached HEAD in a submodule
 
-This is normal. Submodules track specific commits, not branches. To work on a branch:
+Normal — submodules pin a commit. To work on a branch:
 
 ```bash
-cd <submodule-dir>
-git checkout main  # or your branch
-# Make changes...
+cd android
+git checkout main
+# make changes…
 cd ..
-git add <submodule-dir>
-git commit -m "chore: update submodule"
+git add android
+git commit -m "chore: update Android submodule"
 ```
 
-### Submodule changes not showing
+### Submodule stuck at an old commit
 
 ```bash
-git submodule update --remote
-```
-
-### Conflicts in submodule references
-
-```bash
-# Accept theirs
-git checkout --theirs <submodule-dir>
-
-# Accept ours
-git checkout --ours <submodule-dir>
-
-# Then:
-git add <submodule-dir>
-git submodule update --init
-```
-
-### Submodule stuck at old commit
-
-```bash
-cd <submodule-dir>
+cd android
 git fetch
 git checkout main
 git pull
 cd ..
-git add <submodule-dir>
-git commit -m "chore: update submodule to latest"
+git add android
+git commit -m "chore: update Android submodule to latest"
 ```
 
-## Benefits of This Structure
+## Benefits
 
-1. **Separation of Concerns** - Each platform has its own repository, CI/CD, and release cycle
-2. **Independent Versioning** - Android, iOS, and Flutter can have different version numbers
-3. **Easier Contributions** - Contributors can work on specific platforms without cloning everything
-4. **Cleaner History** - Platform-specific commits don't clutter the main repo history
-5. **Flexible Workflows** - Different teams can work independently on each platform
-6. **Better CI/CD** - Each platform can have its own build and deployment pipeline
-
-## Alternative: Mono-repo Approach
-
-If submodules become too complex, consider using a mono-repo tool:
-- **Turborepo** - For JavaScript/TypeScript projects
-- **Nx** - For cross-platform development
-- **Bazel** - For large-scale projects
-- **Git subtree** - Alternative to submodules (copies instead of references)
-
-## Additional Resources
-
-- [Git Submodules Official Documentation](https://git-scm.com/book/en/v2/Git-Tools-Submodules)
-- [GitHub Submodules Guide](https://github.blog/2016-02-01-working-with-submodules/)
-- [Atlassian Git Submodules Tutorial](https://www.atlassian.com/git/tutorials/git-submodule)
+1. Independent versioning and release cycles per platform
+2. Cleaner history in each SDK repo
+3. Example apps can stay in the umbrella without bloating SDK packages
 
 ## Support
 
-If you encounter issues with submodules, please:
-1. Check this guide first
-2. Search existing issues
-3. Create a new issue with details about your problem
+Open an issue on [FaceDetection-GazePoint](https://github.com/Tareq-Ghassan/FaceDetection-GazePoint/issues).
 
 ---
 
-Last updated: 2026-07-29
+Last updated: 2026-07-31

@@ -2,9 +2,11 @@
 
 Demo host app for the Android GazePoint SDK. Mirrors [`ios_example`](../ios_example) consuming [`ios`](../ios).
 
+**Umbrella repo:** [Tareq-Ghassan/FaceDetection-GazePoint](https://github.com/Tareq-Ghassan/FaceDetection-GazePoint)
+
 ```
 FaceDetection-GazePoint/
-├── android/                 # GazePoint SDK (library)
+├── android/                 # GazePoint SDK (submodule)
 │   └── gazepoint-sdk/
 └── android_example/         # This demo app
     └── app/                 # depends on ../android/gazepoint-sdk
@@ -25,6 +27,6 @@ FaceDetection-GazePoint/
 
 ## Requirements
 
-- Android Studio Ladybug+ / AGP 9.2
+- Android Studio / AGP 9.2+
 - Android device or emulator, API 24+
 - Camera permission (requested at runtime)

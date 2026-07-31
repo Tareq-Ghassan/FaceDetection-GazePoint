@@ -55,7 +55,7 @@ Gaze points are the fundamental units of measurement in eye tracking. Each gaze 
 ### Platform-Specific Enhancements
 
 #### Android
-- CameraX 1.4.1 integration for optimized camera handling
+- CameraX 1.6.x integration for optimized camera handling
 - ML Kit face detection with latest models
 - Kotlin coroutines for efficient async operations
 - ProGuard/R8 optimizations for production builds
@@ -63,7 +63,7 @@ Gaze points are the fundamental units of measurement in eye tracking. Each gaze 
 #### iOS
 - Vision framework integration for native performance
 - ARKit support for enhanced accuracy (coming soon)
-- Swift 6.3.3 with modern concurrency
+- Swift 6 / Swift Package Manager (`swift-tools-version: 6.3`)
 - SwiftUI and UIKit compatible
 
 #### Flutter
@@ -79,8 +79,8 @@ Gaze points are the fundamental units of measurement in eye tracking. Each gaze 
 | Platform | Version | Technologies | Status |
 |----------|---------|--------------|--------|
 | **Android** | API 24+ (Android 7.0+) | Kotlin, CameraX, ML Kit | ✅ Stable |
-| **iOS** | iOS 26.6+ | Swift 6.3.3, Vision, ARKit | ✅ Stable |
-| **Flutter** | Flutter 3.44.7+ | Dart 3.5+, Platform Channels | ✅ Stable |
+| **iOS** | iOS 16.0+ | Swift 6, Vision | ✅ Stable |
+| **Flutter** | Flutter 3.38.4+ | Dart 3.5+, Platform Channels | ✅ Stable |
 
 ---
 
@@ -135,7 +135,7 @@ result?.let {
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/yourusername/GazePointSDK-iOS", from: "2.0.0")
+    .package(url: "https://github.com/Tareq-Ghassan/GazePointSDK-iOS", from: "2.0.0")
 ]
 ```
 
@@ -166,11 +166,21 @@ class GazeViewController: UIViewController {
 
 #### Installation
 
-Add to `pubspec.yaml`:
+Add to `pubspec.yaml` (after publishing to pub.dev):
 
 ```yaml
 dependencies:
   gazepoint_sdk: ^2.0.0
+```
+
+Or from Git while developing:
+
+```yaml
+dependencies:
+  gazepoint_sdk:
+    git:
+      url: https://github.com/Tareq-Ghassan/GazePointSDK-Flutter.git
+      ref: 2.0.0
 ```
 
 #### Basic Usage
@@ -318,25 +328,26 @@ SDK automatically selects primary face (largest, closest to center, or tracked).
 
 ### Additional Resources
 
-- 📘 [Submodules Setup Guide](SUBMODULES_SETUP.md) - Working with Git submodules
+- 📘 [Submodules Setup Guide](SUBMODULES_SETUP.md) — Working with Git submodules
 - 🎨 Native demos: [android_example](android_example/) · [ios_example](ios_example/)
 
 ---
 
 ## 🏗️ Repository Structure
 
-This repository uses Git submodules to organize platform-specific SDKs:
+This repository (`FaceDetection-GazePoint`) is the umbrella monorepo. Platform SDKs live as Git submodules:
 
 ```
-GazePointSDK/
-├── android/              → GazePointSDK-Android (native library)
+FaceDetection-GazePoint/
+├── android/              → submodule: GazePointSDK-Android
 │   └── gazepoint-sdk/
 ├── android_example/      → Native Android demo host
-├── ios/                  → GazePointSDK-iOS (Swift package + podspec)
+├── ios/                  → submodule: GazePointSDK-iOS (SPM + CocoaPods)
 │   ├── Sources/
-│   └── Package.swift
+│   ├── Package.swift
+│   └── GazePointSDK.podspec
 ├── ios_example/          → Native iOS demo host
-├── flutter/              → Flutter plugin wrapper over native SDKs
+├── flutter/              → submodule: GazePointSDK-Flutter
 │   ├── lib/
 │   ├── android/
 │   ├── ios/
@@ -351,7 +362,7 @@ GazePointSDK/
 
 ```bash
 # Clone with all submodules
-git clone --recurse-submodules https://github.com/yourusername/GazePointSDK.git
+git clone --recurse-submodules https://github.com/Tareq-Ghassan/FaceDetection-GazePoint.git
 
 # Or if already cloned:
 git submodule update --init --recursive
@@ -413,16 +424,15 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👨‍💻 Author & Contact
 
-**Original Author:** [Tareq Ghassan](https://www.linkedin.com/in/Tareq-ghassan)
-
-**SDK Enhancement & Multi-Platform:** GazePoint Team
+**Author:** [Tareq Ghassan](https://www.linkedin.com/in/Tareq-ghassan) ([@Tareq-Ghassan](https://github.com/Tareq-Ghassan))
 
 ### Get in Touch
 
-- 📧 Email: support@gazepoint.com
-- 💬 GitHub Issues: [Report a bug](https://github.com/yourusername/GazePointSDK/issues)
-- 💡 GitHub Discussions: [Feature requests](https://github.com/yourusername/GazePointSDK/discussions)
-- 🐦 Twitter: [@GazePointSDK](https://twitter.com/GazePointSDK)
+- 💬 GitHub Issues: [Report a bug](https://github.com/Tareq-Ghassan/FaceDetection-GazePoint/issues)
+- 📦 Platform repos:
+  - [GazePointSDK-Android](https://github.com/Tareq-Ghassan/GazePointSDK-Android)
+  - [GazePointSDK-iOS](https://github.com/Tareq-Ghassan/GazePointSDK-iOS)
+  - [GazePointSDK-Flutter](https://github.com/Tareq-Ghassan/GazePointSDK-Flutter)
 
 ---
 
