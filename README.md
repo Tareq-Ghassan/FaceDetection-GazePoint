@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![GazePoint SDK](https://img.shields.io/badge/version-2.0.0-blue.svg)
+![GazePoint SDK](https://img.shields.io/badge/version-2.1.0-blue.svg)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Android](https://img.shields.io/badge/Android-24%2B-green.svg)](https://developer.android.com)
 [![iOS](https://img.shields.io/badge/iOS-16.0%2B-blue.svg)](https://developer.apple.com/ios/)
@@ -135,7 +135,7 @@ result?.let {
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/Tareq-Ghassan/GazePointSDK-iOS", from: "2.0.0")
+    .package(url: "https://github.com/Tareq-Ghassan/GazePointSDK-iOS", from: "2.1.0")
 ]
 ```
 
@@ -170,7 +170,7 @@ Add to `pubspec.yaml` (after publishing to pub.dev):
 
 ```yaml
 dependencies:
-  gazepoint_sdk: ^2.0.0
+  gazepoint_sdk: ^2.1.0
 ```
 
 Or from Git while developing:
@@ -180,7 +180,7 @@ dependencies:
   gazepoint_sdk:
     git:
       url: https://github.com/Tareq-Ghassan/GazePointSDK-Flutter.git
-      ref: 2.0.0
+      ref: 2.1.0
 ```
 
 #### Basic Usage
@@ -328,6 +328,7 @@ SDK automatically selects primary face (largest, closest to center, or tracked).
 
 ### Additional Resources
 
+- 🚀 [Release / Publish Guide](.github/RELEASE.md) — tag `vX.Y.Z` to publish via GitHub Actions
 - 📘 [Submodules Setup Guide](SUBMODULES_SETUP.md) — Working with Git submodules
 - 🎨 Native demos: [android_example](android_example/) · [ios_example](ios_example/)
 
