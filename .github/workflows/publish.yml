@@ -131,10 +131,11 @@ jobs:
           set -euo pipefail
 
           if [ -z "${TOKEN:-}" ]; then
-            echo "::warning::SUBMODULES_TOKEN secret is not set."
-            echo "Skipping Android/iOS/Flutter repo tags and JitPack trigger."
-            echo "Flutter pub.dev publish still runs in the other job."
-            exit 0
+            echo "::error::SUBMODULES_TOKEN secret is not set."
+            echo "Create a PAT with contents:write on GazePointSDK-Android, GazePointSDK-iOS, GazePointSDK-Flutter,"
+            echo "then add it as repo secret SUBMODULES_TOKEN (Settings → Secrets and variables → Actions)."
+            echo "See .github/RELEASE.md"
+            exit 1
           fi
 
           tag_repo() {
@@ -145,11 +146,11 @@ jobs:
             dir="$(mktemp -d)"
 
             echo "Tagging $repo @ $sha as $tag"
-            git clone --depth 1 \
+            git clone \
               "https://x-access-token:${TOKEN}@github.com/Tareq-Ghassan/${repo}.git" \
               "$dir"
-            # Fetch the exact commit (may not be on default branch tip)
-            git -C "$dir" fetch --depth 1 origin "$sha"
+            git -C "$dir" fetch --tags origin
+            git -C "$dir" fetch origin "$sha"
             git -C "$dir" checkout "$sha"
 
             if git -C "$dir" rev-parse -q --verify "refs/tags/$tag" >/dev/null; then

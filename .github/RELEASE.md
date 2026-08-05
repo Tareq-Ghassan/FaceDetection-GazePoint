@@ -13,17 +13,24 @@ Publishing is automated. Push a version tag on `main` and CI publishes everythin
    - **Tag pattern:** `v{{version}}`
 4. Do **not** require an environment unless you also create a matching GitHub Environment
 
-### 2. GitHub secret for native repo tags
+### 2. GitHub secret for native repo tags (required)
 
-1. Create a classic PAT (or fine-grained token) with `contents: write` on:
-   - `GazePointSDK-Android`
-   - `GazePointSDK-iOS`
-   - `GazePointSDK-Flutter`
-2. In this repo: **Settings → Secrets and variables → Actions → New repository secret**
-3. Name: `SUBMODULES_TOKEN`
-4. Value: the PAT
+Without this secret the **Tag Android + iOS** job fails.
 
-Without this secret, Flutter still publishes to pub.dev; Android/iOS tagging + JitPack trigger are skipped.
+1. Create a classic PAT: https://github.com/settings/tokens/new  
+   - Scopes: **`repo`** (full) is simplest for public repos tagging  
+   - Or fine-grained: Resource owner `Tareq-Ghassan`, repos:
+     - `GazePointSDK-Android`
+     - `GazePointSDK-iOS`
+     - `GazePointSDK-Flutter`
+     - Permissions: **Contents → Read and write**
+2. In **this** umbrella repo:  
+   https://github.com/Tareq-Ghassan/FaceDetection-GazePoint/settings/secrets/actions  
+   → **New repository secret**
+3. Name: `SUBMODULES_TOKEN`  
+4. Value: paste the PAT → Save
+
+After adding it, re-run the failed workflow job (or push a new version tag).
 
 ## Every release
 
