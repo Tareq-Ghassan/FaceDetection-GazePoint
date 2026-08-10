@@ -10,8 +10,8 @@
 #    - Repository: Tareq-Ghassan/FaceDetection-GazePoint
 #    - Tag pattern: v{{version}}
 # 2) GitHub repo Settings → Secrets → Actions
-#    - Add SUBMODULES_TOKEN (PAT with contents:write on
-#      GazePointSDK-Android, GazePointSDK-iOS, GazePointSDK-Flutter)
+#    - Add SUBMODULES_TOKEN (PAT with contents:write on all GazePointSDK-* repos:
+#      Android, iOS, Flutter, Web, Windows, macOS, Linux)
 #
 # Tag format must be vX.Y.Z and must match flutter/pubspec.yaml version.
 
@@ -98,7 +98,7 @@ jobs:
         run: dart pub publish --force
 
   release-native:
-    name: Tag Android + iOS (+ JitPack)
+    name: Tag All Platform Submodules
     needs: validate
     runs-on: ubuntu-latest
     permissions:
@@ -116,25 +116,44 @@ jobs:
           echo "android=$(git rev-parse HEAD:android)" >> "$GITHUB_OUTPUT"
           echo "ios=$(git rev-parse HEAD:ios)" >> "$GITHUB_OUTPUT"
           echo "flutter=$(git rev-parse HEAD:flutter)" >> "$GITHUB_OUTPUT"
+          echo "web=$(git rev-parse HEAD:web)" >> "$GITHUB_OUTPUT"
+          echo "windows=$(git rev-parse HEAD:windows)" >> "$GITHUB_OUTPUT"
+          echo "macos=$(git rev-parse HEAD:macos)" >> "$GITHUB_OUTPUT"
+          echo "linux=$(git rev-parse HEAD:linux)" >> "$GITHUB_OUTPUT"
           echo "Android SHA: $(git rev-parse HEAD:android)"
           echo "iOS SHA:     $(git rev-parse HEAD:ios)"
           echo "Flutter SHA: $(git rev-parse HEAD:flutter)"
+          echo "Web SHA:     $(git rev-parse HEAD:web)"
+          echo "Windows SHA: $(git rev-parse HEAD:windows)"
+          echo "macOS SHA:   $(git rev-parse HEAD:macos)"
+          echo "Linux SHA:   $(git rev-parse HEAD:linux)"
 
-      - name: Tag submodule repos + trigger JitPack
+      - name: Tag all submodule repos
         env:
           VERSION: ${{ needs.validate.outputs.version }}
           ANDROID_SHA: ${{ steps.shas.outputs.android }}
           IOS_SHA: ${{ steps.shas.outputs.ios }}
           FLUTTER_SHA: ${{ steps.shas.outputs.flutter }}
+          WEB_SHA: ${{ steps.shas.outputs.web }}
+          WINDOWS_SHA: ${{ steps.shas.outputs.windows }}
+          MACOS_SHA: ${{ steps.shas.outputs.macos }}
+          LINUX_SHA: ${{ steps.shas.outputs.linux }}
           TOKEN: ${{ secrets.SUBMODULES_TOKEN }}
         run: |
           set -euo pipefail
 
           if [ -z "${TOKEN:-}" ]; then
             echo "::error::SUBMODULES_TOKEN secret is not set."
-            echo "Create a PAT with contents:write on GazePointSDK-Android, GazePointSDK-iOS, GazePointSDK-Flutter,"
-            echo "then add it as repo secret SUBMODULES_TOKEN (Settings → Secrets and variables → Actions)."
-            echo "See .github/RELEASE.md"
+            echo "Create a PAT with contents:write on all GazePointSDK-* repositories:"
+            echo "  - GazePointSDK-Android"
+            echo "  - GazePointSDK-iOS"
+            echo "  - GazePointSDK-Flutter"
+            echo "  - GazePointSDK-Web"
+            echo "  - GazePointSDK-Windows"
+            echo "  - GazePointSDK-macOS"
+            echo "  - GazePointSDK-Linux"
+            echo "Then add it as repo secret SUBMODULES_TOKEN (Settings → Secrets and variables → Actions)."
+            echo "See .agents/RELEASE.md for more details."
             exit 1
           fi
 
@@ -156,7 +175,7 @@ jobs:
             if git -C "$dir" rev-parse -q --verify "refs/tags/$tag" >/dev/null; then
               existing="$(git -C "$dir" rev-list -n 1 "$tag")"
               if [ "$existing" = "$sha" ]; then
-                echo "Tag $tag already exists on $repo at the same commit — OK"
+                echo "✓ Tag $tag already exists on $repo at the same commit"
               else
                 echo "::error::Tag $tag already exists on $repo at $existing (wanted $sha)"
                 exit 1
@@ -164,21 +183,35 @@ jobs:
             else
               git -C "$dir" tag "$tag" "$sha"
               git -C "$dir" push origin "refs/tags/$tag"
-              echo "Pushed $repo tag $tag"
+              echo "✓ Pushed $repo tag $tag"
             fi
           }
 
-          # Keep native tags without the leading "v" (matches existing 2.0.0 tags).
-          tag_repo "GazePointSDK-Android" "$ANDROID_SHA" "$VERSION"
-          tag_repo "GazePointSDK-iOS" "$IOS_SHA" "$VERSION"
-          tag_repo "GazePointSDK-Flutter" "$FLUTTER_SHA" "$VERSION"
+          # Tag all platform SDKs with version (without leading "v")
+          echo "🏷️  Tagging all platform submodules with version $VERSION..."
+          tag_repo "GazePointSDK-Android" "$ANDROID_SHA" "v$VERSION"
+          tag_repo "GazePointSDK-iOS" "$IOS_SHA" "v$VERSION"
+          tag_repo "GazePointSDK-Flutter" "$FLUTTER_SHA" "v$VERSION"
+          tag_repo "GazePointSDK-Web" "$WEB_SHA" "v$VERSION"
+          tag_repo "GazePointSDK-Windows" "$WINDOWS_SHA" "v$VERSION"
+          tag_repo "GazePointSDK-macOS" "$MACOS_SHA" "v$VERSION"
+          tag_repo "GazePointSDK-Linux" "$LINUX_SHA" "v$VERSION"
 
-          echo "Triggering JitPack build for Android $VERSION"
+          echo ""
+          echo "✅ All submodules tagged successfully!"
+          echo ""
+          echo "📦 Platform SDK Releases:"
+          echo "  • Android (JitPack): com.github.Tareq-Ghassan:GazePointSDK-Android:v${VERSION}"
+          echo "  • iOS (SPM): https://github.com/Tareq-Ghassan/GazePointSDK-iOS/releases/tag/v${VERSION}"
+          echo "  • Flutter (pub.dev): https://pub.dev/packages/gazepoint_sdk/versions/${VERSION}"
+          echo "  • Web (NPM): https://github.com/Tareq-Ghassan/GazePointSDK-Web/releases/tag/v${VERSION}"
+          echo "  • Windows (NuGet): https://github.com/Tareq-Ghassan/GazePointSDK-Windows/releases/tag/v${VERSION}"
+          echo "  • macOS (SPM): https://github.com/Tareq-Ghassan/GazePointSDK-macOS/releases/tag/v${VERSION}"
+          echo "  • Linux (Source): https://github.com/Tareq-Ghassan/GazePointSDK-Linux/releases/tag/v${VERSION}"
+
+          # Trigger JitPack build for Android
+          echo ""
+          echo "🚀 Triggering JitPack build for Android..."
           curl -fsSL \
-            "https://jitpack.io/api/builds/com.github.Tareq-Ghassan/GazePointSDK-Android/${VERSION}" \
+            "https://jitpack.io/api/builds/com.github.Tareq-Ghassan/GazePointSDK-Android/v${VERSION}" \
             || echo "::warning::JitPack trigger request failed (you can retry in the JitPack UI)"
-
-          echo "Done."
-          echo "Android (JitPack): com.github.Tareq-Ghassan:GazePointSDK-Android:${VERSION}"
-          echo "iOS (SPM): https://github.com/Tareq-Ghassan/GazePointSDK-iOS (tag ${VERSION})"
-          echo "Flutter: https://pub.dev/packages/gazepoint_sdk/versions/${VERSION}"
