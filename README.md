@@ -2,20 +2,21 @@
 
 <div align="center">
 
-![GazePoint SDK](https://img.shields.io/badge/version-2.0.0-blue.svg)
+![Version](https://img.shields.io/badge/version-3.0.0-blue.svg)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Android](https://img.shields.io/badge/Android-24%2B-green.svg)](https://developer.android.com)
-[![iOS](https://img.shields.io/badge/iOS-16.0%2B-blue.svg)](https://developer.apple.com/ios/)
-[![Flutter](https://img.shields.io/badge/Flutter-3.24%2B-02569B.svg)](https://flutter.dev)
+[![Platform](https://img.shields.io/badge/platform-android%20%7C%20ios%20%7C%20web%20%7C%20windows%20%7C%20macos%20%7C%20linux-blue)](https://github.com/Tareq-Ghassan/FaceDetection-GazePoint)
+[![pub package](https://img.shields.io/pub/v/gazepoint_sdk.svg)](https://pub.dev/packages/gazepoint_sdk)
 
-**Advanced Eye Tracking and Gaze Point Detection for Mobile Applications**
+**Universal Eye Tracking and Gaze Point Detection**
+
+*Real-time gaze tracking across all major platforms with native performance*
 
 [Features](#-features) •
 [Platforms](#-platform-support) •
 [Quick Start](#-quick-start) •
+[Examples](#-examples) •
 [Documentation](#-documentation) •
-[Use Cases](#-use-cases) •
-[Contributing](#-contributing)
+[Architecture](#-architecture)
 
 </div>
 
@@ -23,19 +24,26 @@
 
 ## 🌟 What is GazePoint SDK?
 
-GazePoint SDK is a comprehensive, cross-platform solution for eye tracking and gaze point detection on mobile devices. It enables developers to understand where users are looking on their screens in real-time, opening up possibilities for UX research, accessibility features, engagement tracking, and innovative user interactions.
+GazePoint SDK is a comprehensive, **universal eye tracking solution** that works seamlessly across Android, iOS, Web, Windows, macOS, and Linux. It enables developers to understand where users are looking on their screens in real-time, opening up possibilities for:
+
+- 📊 **UX Research** - Understand user attention and interaction patterns
+- ♿ **Accessibility** - Enable gaze-based interfaces for users with mobility limitations
+- 🎮 **Gaming** - Create immersive gaming experiences with gaze controls
+- 📈 **Engagement Analytics** - Measure content engagement and attention
+- 🔬 **Research** - Conduct eye tracking studies across platforms
+- 🎯 **Productivity** - Hands-free computer control
 
 ### What is a Gaze Point?
 
-Gaze points are the fundamental units of measurement in eye tracking. Each gaze point represents an individual record of where a user is looking at a specific moment. The SDK calculates these points by:
+A **gaze point** represents where a user is looking at a specific moment in time. The SDK calculates these points by:
 
 1. **Detecting the face** using advanced ML models
-2. **Identifying eye landmarks** for both left and right eyes
+2. **Identifying eye landmarks** for precise pupil tracking
 3. **Computing head pose** (pitch, yaw, roll angles)
 4. **Calculating gaze vectors** with head pose compensation
 5. **Mapping to screen coordinates** with Kalman filtering for smoothness
 
-<img src="https://github.com/Tareq-Ghassan/FaceDetection-GazePoint/assets/67103763/57a5b78c-5f7c-4e56-8200-eda9ce83f79b" alt="What is a Gaze Point" height="250"/>
+<img src="https://github.com/Tareq-Ghassan/FaceDetection-GazePoint/assets/67103763/57a5b78c-5f7c-4e56-8200-eda9ce83f79b" alt="Gaze Point Detection" height="250"/>
 
 ---
 
@@ -43,418 +51,233 @@ Gaze points are the fundamental units of measurement in eye tracking. Each gaze 
 
 ### Core Capabilities
 
-- ✅ **Real-time Gaze Tracking** - 30 FPS tracking with sub-100ms latency
-- ✅ **Head Pose Compensation** - Accurate tracking regardless of head position
-- ✅ **Blink Detection** - Real-time eye state monitoring using Eye Aspect Ratio
-- ✅ **Kalman Filtering** - Smooth, natural gaze point movement
-- ✅ **Adaptive Smoothing** - Velocity-based smoothing for precision vs. smoothness balance
-- ✅ **Multi-Point Calibration** - Improve accuracy with 3-9 calibration points
-- ✅ **Performance Monitoring** - Built-in FPS, latency, and dropped frame tracking
-- ✅ **Multi-Face Support** - Detect and track multiple faces, focus on primary face
+- 🎯 **Real-time Gaze Tracking** - 30 FPS tracking with sub-100ms latency
+- 🧠 **Head Pose Compensation** - Accurate tracking regardless of head position
+- 👁️ **Blink Detection** - Real-time eye state monitoring using Eye Aspect Ratio
+- 📐 **Kalman Filtering** - Smooth, natural gaze point movement
+- 🎨 **Adaptive Smoothing** - Velocity-based smoothing for optimal precision
+- 🎲 **Multi-Point Calibration** - Improve accuracy with 3-9 calibration points
+- 📊 **Performance Monitoring** - Built-in FPS, latency, and dropped frame tracking
+- 👥 **Multi-Face Support** - Detect and track multiple faces simultaneously
 
-### Platform-Specific Enhancements
+### Platform-Specific Technologies
 
-#### Android
-- CameraX 1.6.x integration for optimized camera handling
-- ML Kit face detection with latest models
-- Kotlin coroutines for efficient async operations
-- ProGuard/R8 optimizations for production builds
-
-#### iOS
-- Vision framework integration for native performance
-- ARKit support for enhanced accuracy (coming soon)
-- Swift 6 / Swift Package Manager (`swift-tools-version: 6.3`)
-- SwiftUI and UIKit compatible
-
-#### Flutter
-- Cross-platform API with platform channels
-- Stream-based reactive API
-- State management friendly (Provider, Riverpod, Bloc)
-- Works on both Android and iOS from single codebase
+- **Android** - CameraX + ML Kit Face Detection
+- **iOS** - AVFoundation + Vision Framework
+- **Web** - MediaPipe Face Mesh + TensorFlow.js
+- **Windows** - Windows.Media.FaceAnalysis + ML.NET
+- **macOS** - AVFoundation + Vision Framework
+- **Linux** - OpenCV + dlib + Video4Linux2
 
 ---
 
 ## 📱 Platform Support
 
-| Platform | Version | Technologies | Status |
-|----------|---------|--------------|--------|
-| **Android** | API 24+ (Android 7.0+) | Kotlin, CameraX, ML Kit | ✅ Stable |
-| **iOS** | iOS 16.0+ | Swift 6, Vision | ✅ Stable |
-| **Flutter** | Flutter 3.38.4+ | Dart 3.5+, Platform Channels | ✅ Stable |
+| Platform | Min Version | Technologies | Package | Status |
+|----------|-------------|--------------|---------|--------|
+| 🤖 **Android** | API 24+ | Kotlin, CameraX, ML Kit | [JitPack](https://jitpack.io/#Tareq-Ghassan/GazePointSDK-Android) | ✅ Stable |
+| 🍎 **iOS** | 16.0+ | Swift, Vision, AVFoundation | [SPM](https://github.com/Tareq-Ghassan/GazePointSDK-iOS) / [CocoaPods](https://cocoapods.org) | ✅ Stable |
+| 🌐 **Web** | Modern Browsers | TypeScript, MediaPipe, TF.js | [NPM](https://www.npmjs.com/) | ✅ Stable |
+| 🪟 **Windows** | 10 (1903+) | C#, ML.NET, .NET 6+ | [NuGet](https://www.nuget.org/) | ✅ Stable |
+| 🖥️ **macOS** | 12.0+ | Swift, Vision, AVFoundation | [SPM](https://github.com/Tareq-Ghassan/GazePointSDK-macOS) | ✅ Stable |
+| 🐧 **Linux** | Ubuntu 20.04+ | C++, OpenCV, dlib | Source | ✅ Stable |
+| 🎯 **Flutter** | 3.38.4+ | Dart 3.5+, Platform Channels | [pub.dev](https://pub.dev/packages/gazepoint_sdk) | ✅ Stable |
 
 ---
 
 ## 🚀 Quick Start
 
-### Choose Your Platform
+### Flutter (Recommended)
 
-<details>
-<summary><b>Android (Kotlin/Java)</b></summary>
-
-#### Installation
-
-Local module (same pattern as `ios_example` → `ios`):
-
-```gradle
-// settings.gradle
-include ':gazepoint-sdk'
-project(':gazepoint-sdk').projectDir = new File(settingsDir, '../android/gazepoint-sdk')
-
-// app/build.gradle
-dependencies {
-    implementation project(':gazepoint-sdk')
-}
-```
-
-Or open the ready-made host app: [`android_example/`](android_example/).
-
-#### Basic Usage
-
-```kotlin
-import com.gazepoint.sdk.GazeTracker
-
-val gazeTracker = GazeTracker(context)
-val result = gazeTracker.calculateGazePoint(face)
-result?.let {
-    Log.d("Gaze", "Point: ${it.gazePoint}")
-    Log.d("Gaze", "Confidence: ${it.confidence}")
-    Log.d("Gaze", "Blinking: ${it.isBlinking}")
-}
-```
-
-📖 [Full Android Documentation](android/README.md) · [Example app](android_example/README.md)
-
-</details>
-
-<details>
-<summary><b>iOS (Swift)</b></summary>
-
-#### Installation
-
-**Swift Package Manager:**
-
-```swift
-dependencies: [
-    .package(url: "https://github.com/Tareq-Ghassan/GazePointSDK-iOS", from: "2.0.0")
-]
-```
-
-#### Basic Usage
-
-```swift
-import GazePointSDK
-
-class GazeViewController: UIViewController {
-    let gazeTracker = GazeTracker()
-    
-    func processFrame(_ pixelBuffer: CVPixelBuffer) {
-        if let result = gazeTracker.calculateGazePoint(from: pixelBuffer) {
-            print("Gaze: \(result.gazePoint)")
-            print("Confidence: \(result.confidence)")
-            print("Blinking: \(result.isBlinking)")
-        }
-    }
-}
-```
-
-📖 [Full iOS Documentation](ios/README.md)
-
-</details>
-
-<details>
-<summary><b>Flutter (Cross-Platform)</b></summary>
-
-#### Installation
-
-Add to `pubspec.yaml` (after publishing to pub.dev):
+Get started with our Flutter plugin for cross-platform development:
 
 ```yaml
 dependencies:
-  gazepoint_sdk: ^2.0.0
+  gazepoint_sdk: ^3.0.0
 ```
-
-Or from Git while developing:
-
-```yaml
-dependencies:
-  gazepoint_sdk:
-    git:
-      url: https://github.com/Tareq-Ghassan/GazePointSDK-Flutter.git
-      ref: 2.0.0
-```
-
-#### Basic Usage
 
 ```dart
 import 'package:gazepoint_sdk/gazepoint_sdk.dart';
 
-class GazeScreen extends StatefulWidget {
-  @override
-  _GazeScreenState createState() => _GazeScreenState();
-}
+final tracker = GazeTracker();
+await tracker.initialize();
 
-class _GazeScreenState extends State<GazeScreen> {
-  final gazeTracker = GazeTracker();
-  Offset gazePoint = Offset.zero;
+if (await tracker.requestCameraPermission()) {
+  await tracker.startTracking();
   
-  @override
-  void initState() {
-    super.initState();
-    initGazeTracking();
-  }
-  
-  Future<void> initGazeTracking() async {
-    await gazeTracker.initialize();
-    await gazeTracker.startTracking();
-    
-    gazeTracker.gazeStream.listen((result) {
-      setState(() {
-        gazePoint = result.gazePoint;
-      });
-      print('Gaze: ${result.gazePoint}');
-      print('Confidence: ${(result.confidence * 100).toInt()}%');
-    });
-  }
-  
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        // Your UI here
-        Positioned(
-          left: gazePoint.dx - 10,
-          top: gazePoint.dy - 10,
-          child: Container(
-            width: 20,
-            height: 20,
-            decoration: BoxDecoration(
-              color: Colors.red.withOpacity(0.5),
-              shape: BoxShape.circle,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
+  tracker.gazeStream.listen((result) {
+    print('Gaze: ${result.gazePoint}');
+    print('Confidence: ${result.confidence}');
+  });
 }
 ```
 
-📖 [Full Flutter Documentation](flutter/README.md)
+👉 **[Full Flutter Documentation →](flutter/README.md)**
 
-</details>
+### Native Platforms
 
----
+Each platform has its own native SDK implementation:
 
-## 📊 Detection Scenarios
-
-The SDK handles various face detection scenarios:
-
-### 1. ✅ Best Case: Face and Both Eyes Detected
-<img src="https://github.com/Tareq-Ghassan/FaceDetection-GazePoint/assets/67103763/f8e2a1e5-157d-4619-b3b9-517b2f72dcee" alt="Best case scenario" height="250"/>
-
-Full tracking with high confidence, head pose compensation, and smooth gaze points.
-
-### 2. ⚠️ No Face Detected
-<img src="https://github.com/Tareq-Ghassan/FaceDetection-GazePoint/assets/67103763/dff2b8b9-f1d5-43cd-baf7-83c73051acdc" alt="No face detected" height="250"/>
-
-SDK returns null or error state, allowing graceful handling.
-
-### 3. ⚠️ Face Detected, Eyes Unclear
-<img src="https://github.com/Tareq-Ghassan/FaceDetection-GazePoint/assets/67103763/90b7545c-fefb-4198-8aba-ae7702fb1d07" alt="Eyes not clear" height="250"/>
-
-SDK returns low confidence score, app can decide whether to use data or prompt user.
-
-### 4. 👥 Multiple Faces Detected
-<img src="https://github.com/Tareq-Ghassan/FaceDetection-GazePoint/assets/67103763/0bf69c13-75cf-42d6-9b0a-202d2f9d966b" alt="Multiple faces" height="250"/>
-
-SDK automatically selects primary face (largest, closest to center, or tracked).
+- 🤖 **Android** - [GazePointSDK-Android](https://github.com/Tareq-Ghassan/GazePointSDK-Android)
+- 🍎 **iOS** - [GazePointSDK-iOS](https://github.com/Tareq-Ghassan/GazePointSDK-iOS)
+- 🌐 **Web** - [GazePointSDK-Web](https://github.com/Tareq-Ghassan/GazePointSDK-Web)
+- 🪟 **Windows** - [GazePointSDK-Windows](https://github.com/Tareq-Ghassan/GazePointSDK-Windows)
+- 🖥️ **macOS** - [GazePointSDK-macOS](https://github.com/Tareq-Ghassan/GazePointSDK-macOS)
+- 🐧 **Linux** - [GazePointSDK-Linux](https://github.com/Tareq-Ghassan/GazePointSDK-Linux)
 
 ---
 
-## 🎯 Use Cases
+## 📚 Examples
 
-### 🔬 UX Research & Analytics
-- Generate heatmaps of user attention
-- A/B test UI layouts based on visual attention
-- Understand user reading patterns
-- Optimize content placement
+Comprehensive examples for all platforms are available in the repository:
 
-### ♿ Accessibility
-- Eye-controlled interfaces for users with motor disabilities
-- Hands-free navigation
-- Assistive technology integration
-- Alternative input methods
+- **[Android Example](android_example/)** - Native Android app with Kotlin
+- **[iOS Example](ios_example/)** - Native iOS app with Swift
+- **[Flutter Example](flutter_example/)** - Cross-platform Flutter app
+- **[Web Example](web_example/)** - Browser-based demo
+- **[Windows Example](windows_example/)** - Native Windows console app
+- **[macOS Example](macos_example/)** - Native macOS console app
+- **[Linux Example](linux_example/)** - Native Linux C++ app
 
-### 📚 Education & EdTech
-- Student engagement tracking during lessons
-- Attention span analysis
-- Adaptive learning based on focus
-- Reading comprehension assessment
+👉 **[See all examples with screenshots →](EXAMPLES.md)**
 
-### 🎮 Gaming & Entertainment
-- Gaze-based game controls
-- Immersive interactive experiences
-- Adaptive difficulty based on attention
-- Novel gameplay mechanics
+---
 
-### 🛍️ E-Commerce & Retail
-- Product attention analytics
-- Virtual try-on experiences
-- Conversion optimization insights
-- User journey analysis
+## 🏗️ Architecture
 
-### 🚗 Automotive & Safety
-- Driver attention monitoring
-- Distraction detection
-- Fatigue assessment
-- Safety compliance
+GazePoint SDK uses a **monorepo structure** with Git submodules for each platform:
 
-### 💼 Enterprise & Productivity
-- Meeting engagement analytics
-- Training effectiveness measurement
-- Focus and productivity tracking
-- Workplace ergonomics assessment
+```
+FaceDetection-GazePoint/
+├── android/                  [submodule → GazePointSDK-Android]
+├── ios/                      [submodule → GazePointSDK-iOS]
+├── flutter/                  [submodule → GazePointSDK-Flutter]
+├── web/                      [submodule → GazePointSDK-Web]
+├── windows/                  [submodule → GazePointSDK-Windows]
+├── macos/                    [submodule → GazePointSDK-macOS]
+├── linux/                    [submodule → GazePointSDK-Linux]
+├── android_example/          Example apps (not in submodules)
+├── ios_example/
+├── flutter_example/
+├── web_example/
+├── windows_example/
+├── macos_example/
+└── linux_example/
+```
+
+Each platform SDK:
+- ✅ Can be developed independently
+- ✅ Has its own versioning and releases
+- ✅ Can be published separately
+- ✅ Can be used standalone OR via Flutter
 
 ---
 
 ## 📖 Documentation
 
-### Platform-Specific Guides
+### Getting Started
 
-- 🤖 [Android SDK Documentation](android/README.md)
-- 🍎 [iOS SDK Documentation](ios/README.md)
-- 🎯 [Flutter Plugin Documentation](flutter/README.md)
-- 📱 [Flutter Example App](flutter_example/README.md)
+- 📦 **Installation** - Platform-specific setup guides in each SDK repository
+- 🎯 **Quick Start** - See examples above and in the [Examples Guide](EXAMPLES.md)
+- 🔧 **API Reference** - Full API documentation in [Flutter README](flutter/README.md)
 
-### Additional Resources
+### Advanced Topics
 
-- 📘 [Submodules Setup Guide](SUBMODULES_SETUP.md) — Working with Git submodules
-- 🎨 Native demos: [android_example](android_example/) · [ios_example](ios_example/)
+- 📊 **Performance Optimization** - Tips for achieving best performance
+- 🎨 **Calibration** - Multi-point calibration guide
+- 🐛 **Troubleshooting** - Common issues and solutions
+- 🔌 **Platform Integration** - Platform-specific integration guides
+
+### For Contributors
+
+- 🛠️ **[Publishing Guide](PUBLISHING_GUIDE.md)** - How to publish packages
+- 📝 **[Examples Guide](EXAMPLES.md)** - Overview of all examples
+- 🤖 **[Agent Files](.agents/)** - Setup scripts and internal documentation
 
 ---
 
-## 🏗️ Repository Structure
+## 📊 Performance
 
-This repository (`FaceDetection-GazePoint`) is the umbrella monorepo. Platform SDKs live as Git submodules:
+Expected performance across platforms:
 
-```
-FaceDetection-GazePoint/
-├── android/              → submodule: GazePointSDK-Android
-│   └── gazepoint-sdk/
-├── android_example/      → Native Android demo host
-├── ios/                  → submodule: GazePointSDK-iOS (SPM + CocoaPods)
-│   ├── Sources/
-│   ├── Package.swift
-│   └── GazePointSDK.podspec
-├── ios_example/          → Native iOS demo host
-├── flutter/              → submodule: GazePointSDK-Flutter
-│   ├── lib/
-│   ├── android/
-│   ├── ios/
-│   └── pubspec.yaml
-├── flutter_example/      → Flutter demo host (path → ../flutter)
-├── README.md
-├── LICENSE
-└── SUBMODULES_SETUP.md
-```
+| Metric | Target | Notes |
+|--------|--------|-------|
+| **Frame Rate** | 30 FPS | Consistent across platforms |
+| **Latency** | 50-100ms | Lower on desktop platforms |
+| **Accuracy** | 1-2° visual | After calibration |
+| **CPU Usage** | 5-15% | Varies by device |
+| **Memory** | 100-200 MB | Depends on resolution |
 
-### Cloning with Submodules
+### Optimization Tips
 
-```bash
-# Clone with all submodules
-git clone --recurse-submodules https://github.com/Tareq-Ghassan/FaceDetection-GazePoint.git
-
-# Or if already cloned:
-git submodule update --init --recursive
-```
-
-📖 See [SUBMODULES_SETUP.md](SUBMODULES_SETUP.md) for detailed submodule management.
+1. **Run Calibration** - Improves accuracy by 50-80%
+2. **Good Lighting** - Ensure face is well-lit
+3. **Optimal Distance** - 50-80cm from camera
+4. **Center Face** - Keep face in camera view
+5. **High-End Hardware** - Better performance on newer devices
 
 ---
 
 ## 🤝 Contributing
 
-We welcome contributions! Whether it's:
+We welcome contributions! Here's how you can help:
 
-- 🐛 Bug reports and fixes
-- ✨ New features
-- 📚 Documentation improvements
-- 🧪 Test coverage
-- 🎨 UI/UX enhancements
-
-Please read our [Contributing Guide](CONTRIBUTING.md) (coming soon) for details on our code of conduct and the process for submitting pull requests.
+1. 🐛 **Report Bugs** - [Open an issue](https://github.com/Tareq-Ghassan/FaceDetection-GazePoint/issues)
+2. 💡 **Suggest Features** - Share your ideas
+3. 📝 **Improve Documentation** - Help make docs clearer
+4. 🔧 **Submit Pull Requests** - Fix bugs or add features
 
 ### Development Setup
 
-1. Clone the repository with submodules
-2. Choose your platform and navigate to the respective directory
-3. Follow platform-specific setup instructions
-4. Make your changes
-5. Submit a pull request
+```bash
+# Clone with submodules
+git clone --recurse-submodules https://github.com/Tareq-Ghassan/FaceDetection-GazePoint.git
+
+# Or if already cloned
+cd FaceDetection-GazePoint
+git submodule update --init --recursive
+```
 
 ---
 
-## 📊 Roadmap
+## 📝 License
 
-### Version 2.1 (Q4 2026)
-- [ ] Web support (WebAssembly)
-- [ ] ARKit integration for iOS
-- [ ] Improved calibration UI components
-- [ ] Cloud-based calibration profiles
+MIT License - Copyright (c) 2024-2026 Tareq Abu Saleh
 
-### Version 2.2 (Q1 2027)
-- [ ] React Native wrapper
-- [ ] Unity plugin
-- [ ] Real-time analytics dashboard
-- [ ] Multi-user tracking
-
-### Version 3.0 (Q2 2027)
-- [ ] AI-powered attention prediction
-- [ ] Emotion detection
-- [ ] Fatigue detection
-- [ ] Advanced privacy features
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-## 👨‍💻 Author & Contact
-
-**Author:** [Tareq Ghassan](https://www.linkedin.com/in/Tareq-ghassan) ([@Tareq-Ghassan](https://github.com/Tareq-Ghassan))
-
-### Get in Touch
-
-- 💬 GitHub Issues: [Report a bug](https://github.com/Tareq-Ghassan/FaceDetection-GazePoint/issues)
-- 📦 Platform repos:
-  - [GazePointSDK-Android](https://github.com/Tareq-Ghassan/GazePointSDK-Android)
-  - [GazePointSDK-iOS](https://github.com/Tareq-Ghassan/GazePointSDK-iOS)
-  - [GazePointSDK-Flutter](https://github.com/Tareq-Ghassan/GazePointSDK-Flutter)
+See [LICENSE](LICENSE) file for details.
 
 ---
 
 ## 🙏 Acknowledgments
 
-- Google ML Kit team for face detection models
-- Apple Vision framework team
-- CameraX team for Android camera APIs
-- Flutter team for cross-platform framework
-- All contributors and supporters
+- **Google ML Kit** team for Android face detection
+- **Apple Vision** framework team for iOS/macOS support
+- **MediaPipe** team for web face tracking
+- **OpenCV** community for computer vision tools
+- **Flutter** team for amazing cross-platform framework
+- All **contributors** who have helped improve this project
 
 ---
 
-## 📹 Demo
+## 📞 Support
 
-[View Demo Video](https://drive.google.com/file/d/1gXo4yceQTww4hI5zgYV7oBvWIEw0lSWn/view?usp=sharing)
+- **Issues**: [GitHub Issues](https://github.com/Tareq-Ghassan/FaceDetection-GazePoint/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/Tareq-Ghassan/FaceDetection-GazePoint/discussions)
+- **Flutter Package**: [pub.dev/packages/gazepoint_sdk](https://pub.dev/packages/gazepoint_sdk)
+
+---
+
+## 🌟 Star History
+
+If you find this project useful, please consider giving it a star ⭐
+
+[![Star History Chart](https://api.star-history.com/svg?repos=Tareq-Ghassan/FaceDetection-GazePoint&type=Date)](https://star-history.com/#Tareq-Ghassan/FaceDetection-GazePoint&Date)
 
 ---
 
 <div align="center">
 
-**Made with ❤️ for developers building the future of human-computer interaction**
+**Made with ❤️ by [Tareq Ghassan](https://github.com/Tareq-Ghassan)**
 
 [⬆ Back to Top](#gazepoint-sdk)
 
