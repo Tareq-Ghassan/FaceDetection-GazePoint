@@ -106,14 +106,10 @@ jobs:
             "",
             "🎯 SCORES:",
             "  Overall: \(.scores.grantedPoints)/\(.scores.maxPoints) points",
-            "  Documentation: \(.derivedTags | map(select(. | startswith("sdk:")) | . ) | length) platforms documented",
             "",
             "✅ Granted Points: \(.scores.grantedPoints)",
             "📊 Max Points: \(.scores.maxPoints)",
-            "⚠️  Lost Points: \(.scores.lostPoints)",
-            "",
-            "Platform Support:",
-            (.derivedTags | map(select(. | startswith("platform:"))) | join(", "))
+            ""
           '
           
           # Check if score is acceptable (>= 100 points recommended)
