@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0-windows10.0.19041.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <UseWPF>true</UseWPF>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    
+    <PackageId>GazePoint.SDK.Windows</PackageId>
+    <Version>2.0.0</Version>
+    <Authors>Tareq Abu Saleh</Authors>
+    <Company>GazePoint</Company>
+    <Description>Real-time eye tracking and gaze point detection for Windows applications</Description>
+    <PackageTags>eye-tracking;gaze-detection;computer-vision;windows;wpf;uwp</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/Tareq-Ghassan/GazePointSDK-Windows</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Tareq-Ghassan/GazePointSDK-Windows</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.ML" Version="3.0.0" />
+    <PackageReference Include="Microsoft.ML.Vision" Version="3.0.0" />
+    <PackageReference Include="System.Drawing.Common" Version="8.0.0" />
+  </ItemGroup>
+
+</Project>
