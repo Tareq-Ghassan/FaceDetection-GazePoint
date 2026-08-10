@@ -112,18 +112,27 @@ jobs:
             ""
           '
           
-          # Check if score is acceptable (>= 100 points recommended)
+          # Check if score is acceptable
           SCORE=$(cat pana-report.json | jq -r '.scores.grantedPoints')
           MAX_SCORE=$(cat pana-report.json | jq -r '.scores.maxPoints')
           echo ""
-          if [ "$SCORE" -ge 100 ]; then
-            echo "✅ Package score is excellent: $SCORE/$MAX_SCORE points"
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          if [ "$SCORE" -eq "$MAX_SCORE" ]; then
+            echo "🎉 PERFECT SCORE: $SCORE/$MAX_SCORE points!"
+          elif [ "$SCORE" -ge 150 ]; then
+            echo "✅ EXCELLENT: $SCORE/$MAX_SCORE points"
+          elif [ "$SCORE" -ge 130 ]; then
+            echo "✅ VERY GOOD: $SCORE/$MAX_SCORE points"
+          elif [ "$SCORE" -ge 100 ]; then
+            echo "✅ GOOD: $SCORE/$MAX_SCORE points"
           elif [ "$SCORE" -ge 80 ]; then
-            echo "⚠️  Package score is good but could be improved: $SCORE/$MAX_SCORE points"
+            echo "⚠️  ACCEPTABLE: $SCORE/$MAX_SCORE points"
+            echo "::warning::Package score could be improved."
           else
-            echo "❌ Package score needs improvement: $SCORE/$MAX_SCORE points"
-            echo "::warning::Package score is below 80 points. Consider improving before publishing."
+            echo "❌ NEEDS IMPROVEMENT: $SCORE/$MAX_SCORE points"
+            echo "::warning::Package score is below 80 points."
           fi
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━"
 
       - name: Upload Pana Report
         uses: actions/upload-artifact@v4
