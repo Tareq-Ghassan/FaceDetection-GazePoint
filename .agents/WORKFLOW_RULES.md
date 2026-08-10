@@ -5,11 +5,17 @@
 ### 1. Always Create an Issue FIRST
 - **REQUIRED**: Create a GitHub issue before starting work
 - Use clear, descriptive titles
-- Include:
+- **MUST SET**:
+  - **Assignees**: Assign to yourself or team member
+  - **Labels**: Use appropriate labels (bug, feature, documentation, enhancement, etc.)
+  - **Milestone**: Link to current sprint/release milestone if applicable
+  - **Projects**: Add to relevant project board if exists
+  - **Relationships**: Link related issues if applicable
+  - **Development**: Link branch when created
+- Include in description:
   - Problem description
   - Proposed solution
   - Acceptance criteria
-  - Appropriate labels (bug, feature, documentation, etc.)
 - Get the issue number to reference in commits and PR
 
 ### 2. Always Create a Branch
@@ -48,29 +54,35 @@
 ## Example Workflow
 
 ```bash
-# 1. Create and checkout branch
+# 1. Create issue FIRST
+gh issue create --title "Add new feature" \
+  --body "Problem: ...\nSolution: ...\nAcceptance Criteria: ..." \
+  --label "enhancement"
+# Note the issue number (e.g., #123)
+
+# 2. Create and checkout branch
 git checkout -b cursor/add-new-feature-6df9
 
-# 2. Make changes
+# 3. Make changes
 # ... edit files ...
 
-# 3. Commit changes
+# 4. Commit changes (reference issue)
 git add .
 git commit -m "feat: add new feature
 
 Implements XYZ functionality to solve ABC problem.
 
-Closes #123"
+Resolves #123"
 
-# 4. Push branch
+# 5. Push branch
 git push -u origin cursor/add-new-feature-6df9
 
-# 5. Create PR immediately
+# 6. Create PR immediately (reference issue)
 gh pr create --title "feat: add new feature" \
-  --body "Description of changes..." \
+  --body "Resolves #123\n\nDescription of changes..." \
   --base main
 
-# 6. After approval and merge
+# 7. After approval and merge
 git push origin --delete cursor/add-new-feature-6df9
 git branch -d cursor/add-new-feature-6df9
 ```
@@ -114,4 +126,12 @@ Consider enabling these GitHub branch protection rules:
 
 ---
 
-**Remember**: Always Branch → Always PR → Always Delete After Merge
+**Remember**: Always Issue → Always Branch → Always PR → Always Delete After Merge
+
+The complete flow is:
+1. 🎫 **Create Issue** - Document the problem/feature
+2. 🌿 **Create Branch** - Start work in isolation
+3. 📝 **Make Changes** - Implement the solution
+4. 🔀 **Create PR** - Request review (reference issue)
+5. ✅ **Merge** - After approval
+6. 🗑️ **Delete Branch** - Keep repo clean
