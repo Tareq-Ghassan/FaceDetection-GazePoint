@@ -1,0 +1,152 @@
+# Manual workflow to check package quality score using Pana
+# Can be triggered manually from GitHub Actions tab
+
+name: Check Package Score (Pana)
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'flutter/**'
+
+jobs:
+  pana-analysis:
+    name: Pana Package Analysis
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout (with submodules)
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Setup Dart
+        uses: dart-lang/setup-dart@v1
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Pub get
+        working-directory: flutter
+        run: flutter pub get
+
+      - name: Install Pana 0.23.17
+        run: dart pub global activate pana 0.23.17
+
+      - name: Run Pana Analysis
+        working-directory: flutter
+        run: |
+          echo "📊 Running Pana Package Analysis (version 0.23.17)..."
+          echo ""
+          pana --no-warning --json > pana-report.json 2>&1 || true
+          
+          if [ ! -s pana-report.json ]; then
+            echo "❌ Pana failed to generate report"
+            pana --no-warning
+            exit 1
+          fi
+          
+          echo "=== 📦 PACKAGE ANALYSIS RESULTS ==="
+          echo ""
+          
+          # Extract and display key metrics
+          PACKAGE_NAME=$(cat pana-report.json | jq -r '.packageName // "unknown"')
+          PACKAGE_VERSION=$(cat pana-report.json | jq -r '.packageVersion // "unknown"')
+          GRANTED=$(cat pana-report.json | jq -r '.scores.grantedPoints // 0')
+          MAX=$(cat pana-report.json | jq -r '.scores.maxPoints // 0')
+          
+          echo "📦 Package: $PACKAGE_NAME v$PACKAGE_VERSION"
+          echo ""
+          echo "🎯 OVERALL SCORE: $GRANTED / $MAX points"
+          echo ""
+          
+          # Display detailed scores
+          cat pana-report.json | jq -r '
+            "📊 SCORE BREAKDOWN:",
+            "  ✓ Granted Points: \(.scores.grantedPoints)",
+            "  ⊗ Lost Points: \(.scores.lostPoints)",
+            "  ∑ Max Points: \(.scores.maxPoints)",
+            ""
+          '
+          
+          # Platform support
+          echo "🌐 PLATFORM SUPPORT:"
+          cat pana-report.json | jq -r '
+            (.derivedTags | map(select(. | startswith("platform:"))) | 
+            map("  • " + (. | split(":")[1])) | join("\n"))
+          '
+          echo ""
+          
+          # SDK support
+          echo "🔧 SDK SUPPORT:"
+          cat pana-report.json | jq -r '
+            (.derivedTags | map(select(. | startswith("sdk:"))) | 
+            map("  • " + (. | split(":")[1])) | join("\n"))
+          '
+          echo ""
+          
+          # Show suggestions if any
+          SUGGESTIONS=$(cat pana-report.json | jq -r '.report.sections[] | select(.title == "Suggestions") | .summary' 2>/dev/null || echo "")
+          if [ -n "$SUGGESTIONS" ]; then
+            echo "💡 SUGGESTIONS:"
+            cat pana-report.json | jq -r '.report.sections[] | select(.title == "Suggestions") | .grantedPoints as $granted | .maxPoints as $max | 
+              "  Points: \($granted)/\($max)",
+              (.suggestions // [] | map("  • \(.title): \(.description)") | join("\n"))'
+            echo ""
+          fi
+          
+          # Overall verdict
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          if [ "$GRANTED" -ge 130 ]; then
+            echo "✅ EXCELLENT! Package score is outstanding: $GRANTED/$MAX points"
+            echo "   This package should get top marks on pub.dev! 🌟"
+          elif [ "$GRANTED" -ge 110 ]; then
+            echo "✅ GREAT! Package score is very good: $GRANTED/$MAX points"
+            echo "   This package meets high quality standards."
+          elif [ "$GRANTED" -ge 90 ]; then
+            echo "⚠️  GOOD: Package score is acceptable: $GRANTED/$MAX points"
+            echo "   Consider addressing suggestions to improve."
+          else
+            echo "❌ NEEDS IMPROVEMENT: Package score is low: $GRANTED/$MAX points"
+            echo "   Please address the issues before publishing."
+            exit 1
+          fi
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+
+      - name: Generate Pana Summary
+        if: always()
+        working-directory: flutter
+        run: |
+          if [ -s pana-report.json ]; then
+            echo "## 📊 Pana Analysis Results" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            
+            GRANTED=$(cat pana-report.json | jq -r '.scores.grantedPoints')
+            MAX=$(cat pana-report.json | jq -r '.scores.maxPoints')
+            
+            echo "### Overall Score: $GRANTED / $MAX points" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            
+            cat pana-report.json | jq -r '
+              "#### Platform Support",
+              "",
+              (.derivedTags | map(select(. | startswith("platform:"))) | 
+              map("- ✅ " + (. | split(":")[1] | ascii_upcase)) | join("\n")),
+              "",
+              "#### Sections",
+              "",
+              (.report.sections[] | 
+              "**\(.title)**: \(.grantedPoints)/\(.maxPoints) points  ")
+            ' >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: Upload Pana Report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pana-analysis-report
+          path: flutter/pana-report.json
+          retention-days: 30
