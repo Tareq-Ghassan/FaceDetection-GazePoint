@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GazePoint SDK - Web Example</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 8px;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 32px;
+        }
+        
+        .video-container {
+            position: relative;
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 24px;
+        }
+        
+        #videoElement {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        #gazePoint {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #00ff00;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            transition: all 0.1s ease-out;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #5568d3;
+        }
+        
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #333;
+        }
+        
+        .btn-secondary:hover {
+            background: #cbd5e0;
+        }
+        
+        .btn-danger {
+            background: #f56565;
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: #e53e3e;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        
+        .stat-card {
+            background: #f7fafc;
+            padding: 16px;
+            border-radius: 8px;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: #718096;
+            margin-bottom: 4px;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #2d3748;
+        }
+        
+        .status {
+            padding: 8px 16px;
+            border-radius: 6px;
+            display: inline-block;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .status.active {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+        
+        .status.inactive {
+            background: #fed7d7;
+            color: #742a2a;
+        }
+        
+        .log {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 16px;
+            border-radius: 8px;
+            max-height: 200px;
+            overflow-y: auto;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 12px;
+        }
+        
+        .log-entry {
+            margin-bottom: 4px;
+        }
+        
+        .log-timestamp {
+            color: #718096;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 GazePoint SDK - Web Example</h1>
+        <p class="subtitle">Real-time eye tracking and gaze detection in the browser</p>
+        
+        <div class="video-container">
+            <video id="videoElement" autoplay playsinline></video>
+            <div id="gazePoint"></div>
+        </div>
+        
+        <div class="controls">
+            <button id="startBtn" class="btn-primary">Start Tracking</button>
+            <button id="stopBtn" class="btn-danger" disabled>Stop Tracking</button>
+            <button id="calibrateBtn" class="btn-secondary" disabled>Calibrate</button>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-label">Status</div>
+                <span id="status" class="status inactive">Inactive</span>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Gaze X</div>
+                <div id="gazeX" class="stat-value">-</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Gaze Y</div>
+                <div id="gazeY" class="stat-value">-</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Confidence</div>
+                <div id="confidence" class="stat-value">-</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">FPS</div>
+                <div id="fps" class="stat-value">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Blink Status</div>
+                <div id="blink" class="stat-value">-</div>
+            </div>
+        </div>
+        
+        <h3>Console Log</h3>
+        <div id="log" class="log"></div>
+    </div>
+    
+    <script type="module">
+        // Import GazePoint SDK (adjust path based on your build setup)
+        // import { GazeTracker } from '../web/dist/gazepoint-sdk.js';
+        
+        // Demo implementation (replace with actual SDK when available)
+        class DemoGazeTracker {
+            constructor() {
+                this.isTracking = false;
+                this.video = null;
+                this.frameCount = 0;
+                this.lastFpsUpdate = Date.now();
+            }
+            
+            async initialize() {
+                this.video = document.getElementById('videoElement');
+                const stream = await navigator.mediaDevices.getUserMedia({
+                    video: { width: 1280, height: 720 }
+                });
+                this.video.srcObject = stream;
+                log('Tracker initialized successfully');
+            }
+            
+            async startTracking(callback) {
+                this.isTracking = true;
+                log('Tracking started');
+                
+                const track = () => {
+                    if (!this.isTracking) return;
+                    
+                    // Simulate gaze tracking data
+                    const videoRect = this.video.getBoundingClientRect();
+                    const gazeData = {
+                        gazePoint: {
+                            x: Math.random() * videoRect.width,
+                            y: Math.random() * videoRect.height
+                        },
+                        confidence: 0.85 + Math.random() * 0.15,
+                        isBlinking: Math.random() > 0.95,
+                        headPose: {
+                            pitch: (Math.random() - 0.5) * 20,
+                            yaw: (Math.random() - 0.5) * 20,
+                            roll: (Math.random() - 0.5) * 10
+                        },
+                        timestamp: Date.now()
+                    };
+                    
+                    callback(gazeData);
+                    
+                    this.frameCount++;
+                    const now = Date.now();
+                    if (now - this.lastFpsUpdate >= 1000) {
+                        updateFPS(this.frameCount);
+                        this.frameCount = 0;
+                        this.lastFpsUpdate = now;
+                    }
+                    
+                    requestAnimationFrame(track);
+                };
+                
+                track();
+            }
+            
+            stopTracking() {
+                this.isTracking = false;
+                log('Tracking stopped');
+            }
+            
+            async calibrate(points) {
+                log(`Starting calibration with ${points} points...`);
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                log('Calibration completed successfully');
+            }
+        }
+        
+        // UI Elements
+        const startBtn = document.getElementById('startBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const calibrateBtn = document.getElementById('calibrateBtn');
+        const statusEl = document.getElementById('status');
+        const gazePointEl = document.getElementById('gazePoint');
+        const gazeXEl = document.getElementById('gazeX');
+        const gazeYEl = document.getElementById('gazeY');
+        const confidenceEl = document.getElementById('confidence');
+        const fpsEl = document.getElementById('fps');
+        const blinkEl = document.getElementById('blink');
+        const logEl = document.getElementById('log');
+        
+        let tracker = null;
+        
+        function log(message) {
+            const timestamp = new Date().toLocaleTimeString();
+            const entry = document.createElement('div');
+            entry.className = 'log-entry';
+            entry.innerHTML = `<span class="log-timestamp">[${timestamp}]</span> ${message}`;
+            logEl.appendChild(entry);
+            logEl.scrollTop = logEl.scrollHeight;
+        }
+        
+        function updateFPS(fps) {
+            fpsEl.textContent = fps;
+        }
+        
+        function updateStatus(isActive) {
+            statusEl.textContent = isActive ? 'Active' : 'Inactive';
+            statusEl.className = `status ${isActive ? 'active' : 'inactive'}`;
+        }
+        
+        startBtn.addEventListener('click', async () => {
+            try {
+                if (!tracker) {
+                    tracker = new DemoGazeTracker();
+                    await tracker.initialize();
+                }
+                
+                await tracker.startTracking((gazeData) => {
+                    // Update gaze point visualization
+                    gazePointEl.style.left = gazeData.gazePoint.x + 'px';
+                    gazePointEl.style.top = gazeData.gazePoint.y + 'px';
+                    gazePointEl.style.display = 'block';
+                    
+                    // Update stats
+                    gazeXEl.textContent = Math.round(gazeData.gazePoint.x);
+                    gazeYEl.textContent = Math.round(gazeData.gazePoint.y);
+                    confidenceEl.textContent = (gazeData.confidence * 100).toFixed(1) + '%';
+                    blinkEl.textContent = gazeData.isBlinking ? '👁️ Blinking' : '👀 Open';
+                });
+                
+                updateStatus(true);
+                startBtn.disabled = true;
+                stopBtn.disabled = false;
+                calibrateBtn.disabled = false;
+            } catch (error) {
+                log(`Error: ${error.message}`);
+            }
+        });
+        
+        stopBtn.addEventListener('click', () => {
+            if (tracker) {
+                tracker.stopTracking();
+                gazePointEl.style.display = 'none';
+                updateStatus(false);
+                startBtn.disabled = false;
+                stopBtn.disabled = true;
+                calibrateBtn.disabled = true;
+            }
+        });
+        
+        calibrateBtn.addEventListener('click', async () => {
+            if (tracker) {
+                await tracker.calibrate(9);
+            }
+        });
+        
+        log('GazePoint Web SDK Example loaded');
+        log('Click "Start Tracking" to begin');
+    </script>
+</body>
+</html>
