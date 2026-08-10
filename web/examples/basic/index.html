@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GazePoint SDK - Basic Example</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #333;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 20px auto;
+            background: #000;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        .controls {
+            text-align: center;
+            margin: 20px 0;
+        }
+        button {
+            padding: 12px 24px;
+            font-size: 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 0 5px;
+            transition: background-color 0.2s;
+        }
+        .btn-primary {
+            background: #007bff;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #0056b3;
+        }
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        .btn-secondary:hover {
+            background: #545b62;
+        }
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+        .btn-danger:hover {
+            background: #c82333;
+        }
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .info {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin: 20px auto;
+            max-width: 800px;
+        }
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .info-row:last-child {
+            border-bottom: none;
+        }
+        .info-label {
+            font-weight: 600;
+            color: #666;
+        }
+        .info-value {
+            color: #333;
+            font-family: 'Courier New', monospace;
+        }
+        .status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .status.ready {
+            background: #28a745;
+            color: white;
+        }
+        .status.tracking {
+            background: #17a2b8;
+            color: white;
+        }
+        .status.error {
+            background: #dc3545;
+            color: white;
+        }
+        .gaze-indicator {
+            position: fixed;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: rgba(255, 0, 0, 0.6);
+            border: 2px solid white;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            display: none;
+            z-index: 9999;
+        }
+        .gaze-indicator.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 GazePoint SDK - Basic Example</h1>
+        
+        <div class="video-container">
+            <video id="video" autoplay playsinline></video>
+            <canvas id="canvas"></canvas>
+        </div>
+        
+        <div class="controls">
+            <button id="initBtn" class="btn-primary">Initialize</button>
+            <button id="startBtn" class="btn-primary" disabled>Start Tracking</button>
+            <button id="stopBtn" class="btn-secondary" disabled>Stop</button>
+            <button id="calibrateBtn" class="btn-secondary" disabled>Calibrate</button>
+        </div>
+        
+        <div class="info">
+            <div class="info-row">
+                <span class="info-label">Status:</span>
+                <span class="info-value"><span id="status" class="status">Not initialized</span></span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Gaze Point:</span>
+                <span class="info-value" id="gazePoint">-</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Confidence:</span>
+                <span class="info-value" id="confidence">-</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Blinking:</span>
+                <span class="info-value" id="blinking">-</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Head Pose:</span>
+                <span class="info-value" id="headPose">-</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">FPS:</span>
+                <span class="info-value" id="fps">-</span>
+            </div>
+        </div>
+    </div>
+    
+    <div id="gazeIndicator" class="gaze-indicator"></div>
+
+    <script type="module">
+        import { GazeTracker, TrackerState } from '../../dist/index.js';
+        
+        // UI Elements
+        const videoElement = document.getElementById('video');
+        const canvasElement = document.getElementById('canvas');
+        const initBtn = document.getElementById('initBtn');
+        const startBtn = document.getElementById('startBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const calibrateBtn = document.getElementById('calibrateBtn');
+        const statusElement = document.getElementById('status');
+        const gazeIndicator = document.getElementById('gazeIndicator');
+        
+        // Info elements
+        const gazePointElement = document.getElementById('gazePoint');
+        const confidenceElement = document.getElementById('confidence');
+        const blinkingElement = document.getElementById('blinking');
+        const headPoseElement = document.getElementById('headPose');
+        const fpsElement = document.getElementById('fps');
+        
+        // Create tracker
+        let tracker = null;
+        
+        // Initialize tracker
+        initBtn.addEventListener('click', async () => {
+            try {
+                initBtn.disabled = true;
+                updateStatus('Initializing...', 'tracking');
+                
+                tracker = new GazeTracker({
+                    videoElement,
+                    canvasElement,
+                    debug: true,
+                    onGazeUpdate: (result) => {
+                        // Update info display
+                        gazePointElement.textContent = `(${result.gazePoint.x.toFixed(0)}, ${result.gazePoint.y.toFixed(0)})`;
+                        confidenceElement.textContent = `${(result.confidence * 100).toFixed(0)}%`;
+                        blinkingElement.textContent = result.isBlinking ? 'Yes' : 'No';
+                        headPoseElement.textContent = `P:${result.headPose.pitch.toFixed(1)}° Y:${result.headPose.yaw.toFixed(1)}° R:${result.headPose.roll.toFixed(1)}°`;
+                        
+                        // Update gaze indicator
+                        gazeIndicator.style.left = `${result.gazePoint.x}px`;
+                        gazeIndicator.style.top = `${result.gazePoint.y}px`;
+                        gazeIndicator.classList.add('active');
+                    },
+                    onError: (error) => {
+                        console.error('Tracker error:', error);
+                        updateStatus('Error', 'error');
+                    }
+                });
+                
+                await tracker.initialize();
+                
+                updateStatus('Ready', 'ready');
+                startBtn.disabled = false;
+                calibrateBtn.disabled = false;
+                
+            } catch (error) {
+                console.error('Failed to initialize:', error);
+                updateStatus('Error', 'error');
+                initBtn.disabled = false;
+            }
+        });
+        
+        // Start tracking
+        startBtn.addEventListener('click', async () => {
+            try {
+                startBtn.disabled = true;
+                await tracker.start();
+                updateStatus('Tracking', 'tracking');
+                stopBtn.disabled = false;
+                
+                // Start FPS counter
+                updateFPS();
+            } catch (error) {
+                console.error('Failed to start tracking:', error);
+                startBtn.disabled = false;
+            }
+        });
+        
+        // Stop tracking
+        stopBtn.addEventListener('click', () => {
+            tracker.stop();
+            updateStatus('Ready', 'ready');
+            startBtn.disabled = false;
+            stopBtn.disabled = true;
+            gazeIndicator.classList.remove('active');
+        });
+        
+        // Calibration (placeholder)
+        calibrateBtn.addEventListener('click', () => {
+            alert('Calibration interface coming soon!');
+        });
+        
+        // Update status display
+        function updateStatus(text, className) {
+            statusElement.textContent = text;
+            statusElement.className = `status ${className}`;
+        }
+        
+        // Update FPS counter
+        function updateFPS() {
+            if (tracker && tracker.getState() === TrackerState.TRACKING) {
+                const metrics = tracker.getPerformanceMetrics();
+                fpsElement.textContent = `${metrics.fps.toFixed(1)} FPS (${metrics.droppedFrames} dropped)`;
+                setTimeout(updateFPS, 1000);
+            }
+        }
+    </script>
+</body>
+</html>
