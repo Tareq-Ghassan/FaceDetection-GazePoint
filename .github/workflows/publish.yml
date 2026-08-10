@@ -89,6 +89,53 @@ jobs:
         working-directory: flutter
         run: flutter pub get
 
+      - name: Install Pana
+        run: dart pub global activate pana 0.23.17
+
+      - name: Run Pana Analysis
+        working-directory: flutter
+        run: |
+          echo "📊 Running Pana Package Analysis..."
+          pana --no-warning --json > pana-report.json || true
+          
+          # Display summary
+          echo ""
+          echo "=== PANA ANALYSIS RESULTS ==="
+          cat pana-report.json | jq -r '
+            "📦 Package: \(.packageName) v\(.packageVersion)",
+            "",
+            "🎯 SCORES:",
+            "  Overall: \(.scores.grantedPoints)/\(.scores.maxPoints) points",
+            "  Documentation: \(.derivedTags | map(select(. | startswith("sdk:")) | . ) | length) platforms documented",
+            "",
+            "✅ Granted Points: \(.scores.grantedPoints)",
+            "📊 Max Points: \(.scores.maxPoints)",
+            "⚠️  Lost Points: \(.scores.lostPoints)",
+            "",
+            "Platform Support:",
+            (.derivedTags | map(select(. | startswith("platform:"))) | join(", "))
+          '
+          
+          # Check if score is acceptable (>= 100 points recommended)
+          SCORE=$(cat pana-report.json | jq -r '.scores.grantedPoints')
+          MAX_SCORE=$(cat pana-report.json | jq -r '.scores.maxPoints')
+          echo ""
+          if [ "$SCORE" -ge 100 ]; then
+            echo "✅ Package score is excellent: $SCORE/$MAX_SCORE points"
+          elif [ "$SCORE" -ge 80 ]; then
+            echo "⚠️  Package score is good but could be improved: $SCORE/$MAX_SCORE points"
+          else
+            echo "❌ Package score needs improvement: $SCORE/$MAX_SCORE points"
+            echo "::warning::Package score is below 80 points. Consider improving before publishing."
+          fi
+
+      - name: Upload Pana Report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pana-report
+          path: flutter/pana-report.json
+
       - name: Dry-run
         working-directory: flutter
         run: dart pub publish --dry-run
