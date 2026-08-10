@@ -7,3 +7,15 @@
 [submodule "flutter"]
 	path = flutter
 	url = https://github.com/Tareq-Ghassan/GazePointSDK-Flutter.git
+[submodule "web"]
+	path = web
+	url = https://github.com/Tareq-Ghassan/GazePointSDK-Web.git
+[submodule "windows"]
+	path = windows
+	url = https://github.com/Tareq-Ghassan/GazePointSDK-Windows.git
+[submodule "macos"]
+	path = macos
+	url = https://github.com/Tareq-Ghassan/GazePointSDK-macOS.git
+[submodule "linux"]
+	path = linux
+	url = https://github.com/Tareq-Ghassan/GazePointSDK-Linux.git
