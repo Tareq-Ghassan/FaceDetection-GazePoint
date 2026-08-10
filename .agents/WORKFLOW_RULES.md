@@ -2,14 +2,21 @@
 
 ## Mandatory Workflow for All Changes
 
-### 1. Always Create a Branch
+### 1. Always Create an Issue FIRST
+- **REQUIRED**: Create a GitHub issue before starting work
+- Use clear, descriptive titles
+- Include:
+  - Problem description
+  - Proposed solution
+  - Acceptance criteria
+  - Appropriate labels (bug, feature, documentation, etc.)
+- Get the issue number to reference in commits and PR
+
+### 2. Always Create a Branch
 - **NEVER** commit directly to `main`
 - Always create a feature branch: `cursor/<descriptive-name>-6df9`
 - Use lowercase and kebab-case for branch names
-
-### 2. Always Open an Issue (Optional but Recommended)
-- For significant features or bug fixes, create a GitHub issue first
-- Reference the issue number in commits and PR
+- Branch name should reflect the issue being addressed
 
 ### 3. Always Create a Pull Request
 - **REQUIRED**: Every branch MUST have an associated Pull Request
