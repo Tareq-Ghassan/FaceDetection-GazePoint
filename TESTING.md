@@ -41,7 +41,7 @@ flutter pub get
 | Command | What it tests | Expectation today |
 |---------|----------------|-------------------|
 | `flutter emulators --launch Pixel_10_Pro_XL` then `flutter run -d android` | Flutter → JitPack Android `2.1.1`; example `compileSdk 37` and JVM 17 for Java+Kotlin | Should work on a device/emulator with a camera |
-| Unlock iPhone, then `flutter run -d ios` | Flutter → iOS snapshot via SwiftPM (`ios/gazepoint_sdk`) | Physical device; camera required. Example `IPHONEOS_DEPLOYMENT_TARGET` must be 16.0. |
+| Unlock iPhone, then `flutter run -d ios` | Flutter → iOS snapshot via SwiftPM (`ios/gazepoint_sdk`) | Prefer **USB**. Wireless debug on iOS 26 often stays on a white launch screen until the Dart VM Service attaches — tap **Allow** on Local Network (or uninstall and rerun). `flutter run -d ios --release` skips the debugger and shows the UI. |
 | `flutter emulators --launch apple_ios_simulator` then `flutter run -d iPhone` | Flutter iOS compile | Launch only unless you inject a camera |
 | `flutter run -d macos` | Flutter macOS plugin | **Will fail** until macOS plugin sources exist under `macos/gazepoint_sdk/Sources` |
 | `flutter run -d chrome` | Flutter web plugin (`gazepoint_sdk_web.dart`, MediaPipe Face Mesh CDN) | Allow camera in Chrome. Needs localhost or HTTPS. |

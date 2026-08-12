@@ -20,6 +20,7 @@ If you already cloned this umbrella with `--recurse-submodules`, the same folder
 # Flutter (pub.dev plugin) — Android, iOS, or Chrome
 cd flutter/example && flutter pub get && flutter run
 # Chrome: flutter run -d chrome  (allow camera; MediaPipe loads from jsDelivr)
+# iOS: prefer USB. Wireless debug can stay on a white launch screen until the Dart VM Service attaches.
 
 # Android (open repo root of the Android submodule)
 cd android/example && ./gradlew :app:assembleDebug
