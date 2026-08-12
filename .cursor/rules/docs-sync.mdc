@@ -1,0 +1,25 @@
+---
+description: After any code or product change, sweep and update docs in every GazePoint repo
+alwaysApply: true
+---
+
+# Documentation follows every change
+
+A code change in **one** SDK (for example iOS only) is not done until documentation in **all** repos has been reviewed. Do not only bump version pins.
+
+Code and releases stay independent (commit/tag only the repo that owns the files). **Docs are a cross-repo sweep.** Umbrella README, EXAMPLES, TESTING, PUBLISHING_GUIDE, `.agents/*`, and every SDK README/example README can still need edits, or a **new** doc, even when no other SDK’s source changed.
+
+## Before considering the work done
+
+1. State what changed (API, install, example path, version, architecture, CI, testing).
+2. Search **every** repo: umbrella, `android/`, `ios/`, `flutter/`, `web/`, `windows/`, `macos/`, `linux/` — `README.md`, `example/**/README.md`, `EXAMPLES.md`, `TESTING.md`, `CHANGELOG.md`, `PUBLISHING_GUIDE.md`, `.agents/*.md`, issue templates, workflow comments.
+3. Update any sentence that is now false (old paths, vendored copies, wrong install, stale “how to run”, missing platform).
+4. **Create** a doc if the change has no home (new test steps → `TESTING.md` or that SDK’s example README; new release path → `RELEASE.md` / that SDK README).
+5. Version snippets are one part of this, not the whole job. Grep: `gazepoint_sdk:`, `GazePointSDK-Android:`, `from: "`, `version-`. Historical CHANGELOG headings stay.
+
+```
+❌ iOS API change → only ios/README.md
+✅ iOS API change → ios README + example README, umbrella README/EXAMPLES/TESTING,
+   Flutter README if the plugin snapshot or API is affected, other SDKs if they
+   mention iOS install/coupling — or a new doc if none of those cover it
+```

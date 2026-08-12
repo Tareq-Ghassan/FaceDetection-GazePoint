@@ -31,6 +31,6 @@ pub.dev "Report an issue" goes to GazePointSDK-Flutter. Keep that as the Flutter
 
 Examples live in each SDK (`android/example`, `ios/Example`, `flutter/example`, …), not in the umbrella.
 
-## Docs versions
+## Documentation (every change)
 
-When a package version changes, update install snippets in **that** SDK README and the umbrella README / EXAMPLES / TESTING / PUBLISHING_GUIDE in the same change. Do not leave `gazepoint_sdk: ^3.0.0` in docs after 3.0.3 is on pub.dev.
+Code and tags stay in the repo that owns the files. **Documentation does not.** After any product change — even iOS-only — sweep umbrella + all seven SDK READMEs/example READMEs, `EXAMPLES.md`, `TESTING.md`, `PUBLISHING_GUIDE.md`, and `.agents/*`. Update anything now false; **create** a doc if the change has no home. Version pins are included in that sweep, not a substitute for it. See `.cursor/rules/docs-sync.mdc`.
