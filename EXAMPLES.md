@@ -17,8 +17,9 @@ If you already cloned this umbrella with `--recurse-submodules`, the same folder
 ## Quick start (from the umbrella checkout)
 
 ```bash
-# Flutter (pub.dev plugin)
+# Flutter (pub.dev plugin) — Android, iOS, or Chrome
 cd flutter/example && flutter pub get && flutter run
+# Chrome: flutter run -d chrome  (allow camera; MediaPipe loads from jsDelivr)
 
 # Android (open repo root of the Android submodule)
 cd android/example && ./gradlew :app:assembleDebug

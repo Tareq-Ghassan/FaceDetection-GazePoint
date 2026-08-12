@@ -72,7 +72,7 @@ FaceDetection-GazePoint/                 # Main umbrella repository
 │   │   └── src/
 │   ├── android/        (JitPack: GazePointSDK-Android)
 │   ├── ios/            (source snapshot of GazePointSDK-iOS)
-│   ├── web/            (wraps web/)
+│   ├── lib/gazepoint_sdk_web.dart  (Dart + MediaPipe CDN; does not wrap GazePointSDK-Web)
 │   ├── windows/        (wraps windows/)
 │   ├── macos/          (wraps macos/)
 │   ├── linux/          (wraps linux/)
@@ -375,7 +375,7 @@ git push
 
 ### Step 4: Update Flutter Plugin
 
-The Flutter plugin in `flutter/` submodule needs platform folders that reference the native SDKs:
+The Flutter plugin in `flutter/` has Android (JitPack), iOS (source snapshot), and Web (`lib/gazepoint_sdk_web.dart`, MediaPipe CDN). Windows / macOS / Linux plugin implementations are still missing.
 
 ```
 flutter/

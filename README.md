@@ -81,7 +81,7 @@ A **gaze point** represents where a user is looking at a specific moment in time
 | 🪟 **Windows** | 10 (1903+) | C#, ML.NET, .NET 6+ | [NuGet](https://www.nuget.org/) | ✅ Stable |
 | 🖥️ **macOS** | 12.0+ | Swift, Vision, AVFoundation | [SPM](https://github.com/Tareq-Ghassan/GazePointSDK-macOS) | ✅ Stable |
 | 🐧 **Linux** | Ubuntu 20.04+ | C++, OpenCV, dlib | Source | ✅ Stable |
-| 🎯 **Flutter** | 3.38.4+ | Dart 3.5+, Platform Channels | [pub.dev](https://pub.dev/packages/gazepoint_sdk) | ✅ Stable |
+| 🎯 **Flutter** | 3.38.4+ | Dart 3.6+; Android/iOS channels + Dart web (MediaPipe) | [pub.dev](https://pub.dev/packages/gazepoint_sdk) | ✅ Stable |
 
 ---
 
