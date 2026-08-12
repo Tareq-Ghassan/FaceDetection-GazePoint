@@ -1,5 +1,7 @@
 # Publishing Guide for GazePoint SDK
 
+**Independent releases:** tag the SDK repo you changed. Do not tag every platform together. Short version: [`.agents/RELEASE.md`](.agents/RELEASE.md).
+
 This guide walks you through publishing the GazePoint SDK to all supported platforms: pub.dev (Flutter), CocoaPods/SPM (iOS), and JitPack/Maven (Android).
 
 ---

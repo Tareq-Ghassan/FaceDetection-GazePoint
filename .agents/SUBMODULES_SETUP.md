@@ -5,18 +5,16 @@ This umbrella repository ([FaceDetection-GazePoint](https://github.com/Tareq-Gha
 ## Repository Structure
 
 ```
-FaceDetection-GazePoint/          (umbrella)
-├── android/          → https://github.com/Tareq-Ghassan/GazePointSDK-Android.git
-├── ios/              → https://github.com/Tareq-Ghassan/GazePointSDK-iOS.git
-├── flutter/          → https://github.com/Tareq-Ghassan/GazePointSDK-Flutter.git
-├── android_example/  (lives in umbrella)
-├── ios_example/      (lives in umbrella)
-├── flutter_example/  (lives in umbrella)
+FaceDetection-GazePoint/          (umbrella lockfile)
+├── android/          → GazePointSDK-Android   (includes example/)
+├── ios/              → GazePointSDK-iOS       (includes Example/)
+├── flutter/          → GazePointSDK-Flutter   (includes example/)
+├── web/ windows/ macos/ linux/
 ├── .gitmodules
-├── README.md
-├── LICENSE
-└── SUBMODULES_SETUP.md
+└── README.md
 ```
+
+Examples live **inside each SDK repo**, not in the umbrella.
 
 ## Initial Setup (already done for this project)
 
@@ -71,18 +69,20 @@ git commit -m "chore: update Android submodule"
 
 ## Making Changes in a Submodule
 
-```bash
-cd android   # or ios / flutter
-git checkout main
-# edit, then:
-git add .
-git commit -m "feat: describe change"
-git push origin main
+Work on `main` (or a feature branch) **in that submodule repo**. Push and tag there. Do not create the same branch name on the umbrella.
 
+```bash
+cd android
+git checkout main
+# edit, commit, push, tag — Flutter/iOS stay untouched
+```
+
+To refresh the umbrella lockfile later (optional):
+
+```bash
 cd ..
 git add android
-git commit -m "chore: bump Android submodule"
-git push origin main
+git commit -m "chore: point Android submodule at latest main"
 ```
 
 ## Common Commands
