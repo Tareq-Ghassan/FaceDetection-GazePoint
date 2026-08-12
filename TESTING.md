@@ -40,7 +40,7 @@ flutter pub get
 
 | Command | What it tests | Expectation today |
 |---------|----------------|-------------------|
-| `flutter emulators --launch Pixel_10_Pro_XL` then `flutter run -d android` | Flutter → JitPack Android `2.1.1`; example `compileSdk 37` | Should work on a device/emulator with a camera |
+| `flutter emulators --launch Pixel_10_Pro_XL` then `flutter run -d android` | Flutter → JitPack Android `2.1.1`; example `compileSdk 37` and JVM 17 for Java+Kotlin | Should work on a device/emulator with a camera |
 | Unlock iPhone, then `flutter run -d 00008150-00165D9E1169401C` | Flutter → iOS snapshot | Physical device; camera required |
 | `flutter emulators --launch apple_ios_simulator` then `flutter run -d iPhone` | Flutter iOS compile | Launch only unless you inject a camera |
 | `flutter run -d macos` | Flutter macOS plugin | **Will fail** until `macos/Classes` plugin code exists |
