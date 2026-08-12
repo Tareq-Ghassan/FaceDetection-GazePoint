@@ -9,7 +9,7 @@ Camera + a real face in frame is required for a meaningful pass. Simulators/emul
 
 ## Pass criteria (every demo)
 
-After Start / allow camera:
+After Start / allow camera (the Flutter example now prompts; if you already denied, enable Camera in app settings):
 
 - [ ] Preview or tracker starts without a crash
 - [ ] A gaze indicator moves when you look around
