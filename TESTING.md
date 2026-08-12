@@ -3,7 +3,7 @@
 Two layers, tested separately:
 
 1. **Native SDK** — the platform library + its in-repo example.
-2. **Flutter plugin** (`gazepoint_sdk` 3.0.4 locally; 3.0.3 on pub.dev cannot resolve Android until 3.0.4 is published) — Dart API with **Android, iOS, and Web** implementations. Windows / macOS / Linux are still declared in `pubspec.yaml` without plugin files; test those via the **native** examples.
+2. **Flutter plugin** (`gazepoint_sdk` 3.0.4 locally; 3.0.3 on pub.dev cannot resolve Android until 3.0.4 is published) — Dart API with **Android, iOS, Web, and macOS** implementations. Windows / Linux are still declared in `pubspec.yaml` without plugin files; test those via the **native** examples.
 
 Camera + a real face in frame is required for a meaningful pass. Simulators/emulators without a camera only prove the app **launches**.
 
@@ -43,7 +43,7 @@ flutter pub get
 | `flutter emulators --launch Pixel_10_Pro_XL` then `flutter run -d android` | Flutter → JitPack Android `2.1.1`; example `compileSdk 37` and JVM 17 for Java+Kotlin | Should work on a device/emulator with a camera |
 | Unlock iPhone, then `flutter run -d ios` | Flutter → iOS snapshot via SwiftPM (`ios/gazepoint_sdk`) | Prefer **USB**. Wireless debug on iOS 26 often stays on a white launch screen until the Dart VM Service attaches — tap **Allow** on Local Network (or uninstall and rerun). `flutter run -d ios --release` skips the debugger and shows the UI. |
 | `flutter emulators --launch apple_ios_simulator` then `flutter run -d iPhone` | Flutter iOS compile | Launch only unless you inject a camera |
-| `flutter run -d macos` | Flutter macOS plugin | **Will fail** until macOS plugin sources exist under `macos/gazepoint_sdk/Sources` |
+| `flutter run -d macos` | Flutter macOS plugin (`macos/gazepoint_sdk`, Vision + AVFoundation) | Allow Camera in System Settings. Example `MACOSX_DEPLOYMENT_TARGET` must be 12.0. |
 | `flutter run -d chrome` | Flutter web plugin (`gazepoint_sdk_web.dart`, MediaPipe Face Mesh CDN) | Allow camera in Chrome. Needs localhost or HTTPS. |
 | `flutter run -d windows` | Flutter Windows plugin | Needs Windows **and** missing `windows/` plugin |
 | `flutter run -d linux` | Flutter Linux plugin | Needs Linux **and** missing `linux/` plugin |
@@ -120,7 +120,7 @@ cmake .. && make
 3. Native **Android** example on Pixel 10 Pro XL (webcam/virtual scene if no phone).
 4. Native **iOS** example on the unlocked iPhone.
 5. Generate Flutter example hosts, then Flutter **Android** and Flutter **iPhone**.
-6. Flutter **Chrome** (`flutter run -d chrome`) — allow camera; MediaPipe loads from jsDelivr. Flutter **macOS** still fails until that plugin is implemented.
+6. Flutter **Chrome** (`flutter run -d chrome`) and Flutter **macOS** (`flutter run -d macos`) — allow camera.
 7. Windows + Linux on those OSes (native examples first).
 
 Do not treat a green Gradle/Xcode **build** as a gaze-tracking pass. The checklist at the top is the product test.
