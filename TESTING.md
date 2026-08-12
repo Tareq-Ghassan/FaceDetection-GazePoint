@@ -45,8 +45,8 @@ flutter pub get
 | `flutter emulators --launch apple_ios_simulator` then `flutter run -d iPhone` | Flutter iOS compile | Launch only unless you inject a camera |
 | `flutter run -d macos` | Flutter macOS plugin (`macos/gazepoint_sdk`, Vision + AVFoundation) | Allow Camera in System Settings. Example `MACOSX_DEPLOYMENT_TARGET` must be 12.0. |
 | `flutter run -d chrome` | Flutter web plugin (`gazepoint_sdk_web.dart`, MediaPipe Face Mesh CDN) | Allow camera in Chrome. Needs localhost or HTTPS. |
-| `flutter run -d windows` | Flutter Windows plugin | Needs Windows **and** missing `windows/` plugin |
-| `flutter run -d linux` | Flutter Linux plugin | Needs Linux **and** missing `linux/` plugin |
+| `flutter run -d windows` | Flutter Windows plugin | Needs a Windows PC **and** a plugin implementation (`flutter/windows/` is empty). Native Windows SDK is still a TODO stub. |
+| `flutter run -d linux` | Flutter Linux plugin | Needs a Linux PC **and** a plugin implementation (`flutter/linux/` is empty). Native Linux SDK has a header but no `src/*.cpp`. |
 
 ```bash
 # compile-only checks (no camera)
@@ -98,12 +98,16 @@ swift run
 
 ### Windows `v1.0.0` (Windows machine)
 
+**Not a gaze test yet.** `GazeTracker.cs` is placeholders (`TODO: Initialize face detection and camera`). The example calls APIs the library does not define (`GazeDetected`, `CalibrateAsync(9)`, …), so `dotnet build` is expected to fail until that SDK is implemented.
+
 ```bash
 cd windows/example
 dotnet restore && dotnet build && dotnet run
 ```
 
 ### Linux `v1.0.0` (Linux machine)
+
+**Not a gaze test yet.** `include/gazepoint/GazeTracker.hpp` has no matching `src/*.cpp` in the repo. Root `CMakeLists.txt` lists those sources; `example/` does not link the library and calls methods that are not on the header.
 
 ```bash
 cd linux/example && mkdir -p build && cd build
@@ -129,7 +133,7 @@ Do not treat a green Gradle/Xcode **build** as a gaze-tracking pass. The checkli
 
 ## No Windows or Linux PC
 
-`flutter run -d windows` and `flutter run -d linux` only work **on that OS**. Flutter does not cross-compile a runnable Windows/Linux app from macOS. The Flutter plugin also has **no Windows or Linux implementation yet** (`pubspec.yaml` declares them; the plugin folders are empty). On a real Windows/Linux machine, test the **native** examples first.
+`flutter run -d windows` and `flutter run -d linux` only work **on that OS**. Flutter does not cross-compile a runnable Windows/Linux app from macOS. The Flutter plugin also has **no Windows or Linux implementation yet** (`pubspec.yaml` declares them; the plugin folders are empty). The **native** Windows and Linux SDKs are stubs too (TODOs / missing `.cpp`), so a VM would not give a gaze pass today.
 
 | Goal | What to use | Camera / gaze pass? |
 |------|-------------|---------------------|
