@@ -63,6 +63,10 @@ jobs:
           dart pub global activate pana
           pana --no-warning --exit-code-threshold 160
 
+      - name: Restore tree after Pana
+        working-directory: flutter
+        run: git restore --worktree --source=HEAD -- .
+
       - name: Dry-run
         working-directory: flutter
         run: dart pub publish --dry-run
