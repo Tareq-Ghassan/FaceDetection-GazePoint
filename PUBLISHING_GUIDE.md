@@ -628,22 +628,22 @@ git push origin 2.0.0
 **Flutter:**
 ```yaml
 dependencies:
-  gazepoint_sdk: ^2.0.0
+  gazepoint_sdk: ^3.0.3
 ```
 
 **iOS CocoaPods:**
 ```ruby
-pod 'GazePointSDK', '~> 2.0'
+pod 'GazePointSDK', :git => 'https://github.com/Tareq-Ghassan/GazePointSDK-iOS.git', :tag => '2.1.1'
 ```
 
 **iOS SPM:**
 ```swift
-.package(url: "https://github.com/Tareq-Ghassan/GazePointSDK-iOS.git", from: "2.0.0")
+.package(url: "https://github.com/Tareq-Ghassan/GazePointSDK-iOS.git", from: "2.1.1")
 ```
 
 **Android JitPack:**
 ```gradle
-implementation 'com.github.Tareq-Ghassan:GazePointSDK-Android:2.0.0'
+implementation 'com.github.Tareq-Ghassan:GazePointSDK-Android:2.1.1'
 ```
 
 ---
@@ -658,4 +658,4 @@ implementation 'com.github.Tareq-Ghassan:GazePointSDK-Android:2.0.0'
 
 ---
 
-**Last Updated**: August 5, 2026
+**Last Updated**: August 13, 2026

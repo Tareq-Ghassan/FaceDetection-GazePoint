@@ -1,0 +1,17 @@
+---
+description: Keep published version numbers in sync across all SDK docs
+alwaysApply: true
+---
+
+# Docs versions
+
+After any release (or when a user points out a stale pin), update **every** install snippet and badge in **every** repo that mentions that package. Do not leave umbrella README, Flutter README, and example READMEs on different versions.
+
+Current published pins (bump these in the same change as the docs):
+
+- Flutter / pub.dev: `gazepoint_sdk: ^3.0.3`
+- Android / JitPack: `com.github.Tareq-Ghassan:GazePointSDK-Android:2.1.1`
+- iOS / SPM: `from: "2.1.1"`
+- Web / Windows / macOS / Linux: the git tag on that repo (`v1.0.0`)
+
+Grep before finishing: `gazepoint_sdk:`, `GazePointSDK-Android:`, `from: "`, badge `version-`. Historical CHANGELOG headings stay as-is.

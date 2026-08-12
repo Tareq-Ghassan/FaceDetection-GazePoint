@@ -7,7 +7,7 @@
 # (see flutter/.github/workflows/publish.yml). This workflow remains so
 # existing pub.dev OIDC (repository FaceDetection-GazePoint) keeps working.
 #
-#   git tag v3.0.2 && git push origin v3.0.2
+#   git tag v3.0.3 && git push origin v3.0.3
 
 name: Publish Flutter plugin
 

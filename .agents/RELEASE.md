@@ -35,8 +35,8 @@ SPM URL: `https://github.com/Tareq-Ghassan/GazePointSDK-iOS`
 
 ```bash
 cd flutter
-git tag v3.0.2
-git push origin main v3.0.2
+git tag v3.0.3
+git push origin main v3.0.3
 ```
 
 Android/iOS tags are **not** created.

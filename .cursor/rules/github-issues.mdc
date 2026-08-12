@@ -1,0 +1,25 @@
+---
+description: Fill every GitHub issue field when opening tickets
+alwaysApply: true
+---
+
+# GitHub issues
+
+When creating or updating a GitHub issue in any GazePoint repo, never leave metadata empty. An issue with only a title and body is not done.
+
+Set all of the following before considering the issue done:
+
+- **Assignees** — `--assignee Tareq-Ghassan` (or the person who will do the work)
+- **Labels** — type (`bug`, `enhancement`, `documentation`) plus platform (`android`, `ios`, `flutter`, `web`, `windows`, `macos`, `linux`). Create the platform label if it is missing.
+- **Milestone** — the release this should ship in. If none exists, `gh api` create one (for example `v3.0.4`) and use it. Never skip.
+- **Project** — `--project` on `gh issue create`, or `gh project item-add`. If the token lacks `project` / `read:project` scope, say so in the reply and still set every other field.
+- **Relationships** — parent/sub-issue, blocked-by / blocking, and `Fixes #N` / `Related to #N` in the body and on the PR. Open the issue in the **repo that owns the files**, then link siblings.
+
+```bash
+gh issue create --repo Tareq-Ghassan/GazePointSDK-Flutter \
+  --assignee Tareq-Ghassan \
+  --label "documentation,flutter" \
+  --milestone "v3.0.4" \
+  --project "GazePoint" \
+  --title "..." --body "..."
+```

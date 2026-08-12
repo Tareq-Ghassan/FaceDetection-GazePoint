@@ -40,7 +40,7 @@ pana --json > pana-report.json
 
 ### Score Breakdown
 ```
-Package: gazepoint_sdk v3.0.1
+Package: gazepoint_sdk v3.0.3
 
 SCORES:
   Overall: XXX/160 points

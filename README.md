@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![Version](https://img.shields.io/badge/version-3.0.0-blue.svg)
+![Version](https://img.shields.io/badge/version-3.0.3-blue.svg)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Platform](https://img.shields.io/badge/platform-android%20%7C%20ios%20%7C%20web%20%7C%20windows%20%7C%20macos%20%7C%20linux-blue)](https://github.com/Tareq-Ghassan/FaceDetection-GazePoint)
 [![pub package](https://img.shields.io/pub/v/gazepoint_sdk.svg)](https://pub.dev/packages/gazepoint_sdk)
@@ -93,7 +93,7 @@ Get started with our Flutter plugin for cross-platform development:
 
 ```yaml
 dependencies:
-  gazepoint_sdk: ^3.0.0
+  gazepoint_sdk: ^3.0.3
 ```
 
 ```dart
@@ -139,7 +139,7 @@ Each platform ships its example **inside that SDK repo** (clone one repo, run th
 - **[macOS](https://github.com/Tareq-Ghassan/GazePointSDK-macOS/tree/main/example)**
 - **[Linux](https://github.com/Tareq-Ghassan/GazePointSDK-Linux/tree/main/example)**
 
-👉 **[Examples catalog →](EXAMPLES.md)**
+👉 **[Examples catalog →](EXAMPLES.md)** · **[How to test every SDK →](TESTING.md)**
 
 ---
 

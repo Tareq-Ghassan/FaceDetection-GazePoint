@@ -28,3 +28,9 @@ open ios/Example/ios_example.xcodeproj
 ```
 
 Releasing one SDK does not require updating the others. See [`.agents/WORKFLOW_RULES.md`](.agents/WORKFLOW_RULES.md).
+
+## Testing
+
+Full matrix (Flutter on every platform + each native example): **[TESTING.md](TESTING.md)**.
+
+Published Flutter pin: `gazepoint_sdk: ^3.0.3`.

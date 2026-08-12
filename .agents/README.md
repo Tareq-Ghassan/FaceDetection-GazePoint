@@ -20,6 +20,7 @@ If you're looking for user-facing documentation, see the root directory:
 
 - **[README.md](../README.md)** - Main project documentation
 - **[EXAMPLES.md](../EXAMPLES.md)** - Examples for all platforms
+- **[TESTING.md](../TESTING.md)** - How to run every SDK and Flutter on each platform
 - **[PUBLISHING_GUIDE.md](../PUBLISHING_GUIDE.md)** - Publishing guide for package maintainers
 
 ## For Contributors
