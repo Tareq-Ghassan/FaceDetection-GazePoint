@@ -49,13 +49,13 @@ jobs:
           echo "pubspec=$PUBSPEC tag=$TAG"
           test "$PUBSPEC" = "$TAG"
 
-      - name: Format check
-        working-directory: flutter
-        run: dart format --output=none --set-exit-if-changed lib
-
       - name: Pub get
         working-directory: flutter
         run: flutter pub get
+
+      - name: Format check
+        working-directory: flutter
+        run: dart format --output=none --set-exit-if-changed lib
 
       - name: Pana
         working-directory: flutter
