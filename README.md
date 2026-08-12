@@ -129,47 +129,36 @@ Each platform has its own native SDK implementation:
 
 ## 📚 Examples
 
-Comprehensive examples for all platforms are available in the repository:
+Each platform ships its example **inside that SDK repo** (clone one repo, run the demo):
 
-- **[Android Example](android_example/)** - Native Android app with Kotlin
-- **[iOS Example](ios_example/)** - Native iOS app with Swift
-- **[Flutter Example](flutter_example/)** - Cross-platform Flutter app
-- **[Web Example](web_example/)** - Browser-based demo
-- **[Windows Example](windows_example/)** - Native Windows console app
-- **[macOS Example](macos_example/)** - Native macOS console app
-- **[Linux Example](linux_example/)** - Native Linux C++ app
+- **[Flutter](https://github.com/Tareq-Ghassan/GazePointSDK-Flutter/tree/main/example)**
+- **[Android](https://github.com/Tareq-Ghassan/GazePointSDK-Android/tree/main/example)**
+- **[iOS](https://github.com/Tareq-Ghassan/GazePointSDK-iOS/tree/main/Example)**
+- **[Web](https://github.com/Tareq-Ghassan/GazePointSDK-Web/tree/main/example)**
+- **[Windows](https://github.com/Tareq-Ghassan/GazePointSDK-Windows/tree/main/example)**
+- **[macOS](https://github.com/Tareq-Ghassan/GazePointSDK-macOS/tree/main/example)**
+- **[Linux](https://github.com/Tareq-Ghassan/GazePointSDK-Linux/tree/main/example)**
 
-👉 **[See all examples with screenshots →](EXAMPLES.md)**
+👉 **[Examples catalog →](EXAMPLES.md)**
 
 ---
 
 ## 🏗️ Architecture
 
-GazePoint SDK uses a **monorepo structure** with Git submodules for each platform:
+GazePoint SDK uses **one GitHub repository per platform**. This umbrella only pins submodule SHAs for people who want everything in one checkout.
 
 ```
-FaceDetection-GazePoint/
-├── android/                  [submodule → GazePointSDK-Android]
-├── ios/                      [submodule → GazePointSDK-iOS]
-├── flutter/                  [submodule → GazePointSDK-Flutter]
-├── web/                      [submodule → GazePointSDK-Web]
-├── windows/                  [submodule → GazePointSDK-Windows]
-├── macos/                    [submodule → GazePointSDK-macOS]
-├── linux/                    [submodule → GazePointSDK-Linux]
-├── android_example/          Example apps (not in submodules)
-├── ios_example/
-├── flutter_example/
-├── web_example/
-├── windows_example/
-├── macos_example/
-└── linux_example/
+FaceDetection-GazePoint/          # optional umbrella (lockfile + docs)
+├── android/   → GazePointSDK-Android   (example/ inside that repo)
+├── ios/       → GazePointSDK-iOS       (Example/ inside that repo)
+├── flutter/   → GazePointSDK-Flutter   (example/ inside that repo)
+├── web/       → GazePointSDK-Web
+├── windows/   → GazePointSDK-Windows
+├── macos/     → GazePointSDK-macOS
+└── linux/     → GazePointSDK-Linux
 ```
 
-Each platform SDK:
-- ✅ Can be developed independently
-- ✅ Has its own versioning and releases
-- ✅ Can be published separately
-- ✅ Can be used standalone OR via Flutter
+Changing Android (or any other SDK) is a commit + tag **in that repository only**. Do not create matching branches across repos. See [`.agents/WORKFLOW_RULES.md`](.agents/WORKFLOW_RULES.md).
 
 ---
 

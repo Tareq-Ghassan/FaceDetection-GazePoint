@@ -37,7 +37,7 @@ GazePoint SDK follows a **native-first architecture** where each platform has it
 
 ```
 FaceDetection-GazePoint/                 # Main umbrella repository
-├── android/            →  [SUBMODULE]   # GazePointSDK-Android
+├── android/            →  [SUBMODULE]   # GazePointSDK-Android (+ example/)
 │   └── gazepoint-sdk/
 │       ├── src/main/kotlin/
 │       └── build.gradle
@@ -65,22 +65,19 @@ FaceDetection-GazePoint/                 # Main umbrella repository
 │   ├── src/
 │   ├── include/gazepoint/
 │   └── CMakeLists.txt
-├── flutter/            →  [SUBMODULE]   # GazePointSDK-Flutter
+├── flutter/            →  [SUBMODULE]   # GazePointSDK-Flutter (+ example/)
 │   ├── lib/
 │   │   ├── gazepoint_sdk.dart
 │   │   ├── gazepoint_sdk_web.dart
 │   │   └── src/
-│   ├── android/        (wraps android/)
-│   ├── ios/            (wraps ios/)
+│   ├── android/        (JitPack: GazePointSDK-Android)
+│   ├── ios/            (source snapshot of GazePointSDK-iOS)
 │   ├── web/            (wraps web/)
 │   ├── windows/        (wraps windows/)
 │   ├── macos/          (wraps macos/)
 │   ├── linux/          (wraps linux/)
 │   ├── example/
 │   └── pubspec.yaml
-├── android_example/    # Native Android demo
-├── ios_example/        # Native iOS demo
-├── flutter_example/    # Flutter demo (all platforms)
 ├── README.md
 └── .gitmodules
 ```

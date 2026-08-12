@@ -10,6 +10,7 @@ This directory contains setup scripts and detailed technical documentation prima
 - **`SUBMODULES_SETUP.md`** - Comprehensive Git submodules usage guide and troubleshooting
 
 ### Architecture & Release
+- **`WORKFLOW_RULES.md`** - Independent per-SDK branches, releases, and issue routing
 - **`MULTI_PLATFORM_ARCHITECTURE.md`** - Detailed technical architecture documentation for the multi-platform SDK system
 - **`RELEASE.md`** - Internal release process and GitHub Actions workflow documentation
 
