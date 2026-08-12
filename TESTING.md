@@ -12,7 +12,7 @@ Camera + a real face in frame is required for a meaningful pass. Simulators/emul
 After Start / allow camera (the Flutter example now prompts; if you already denied, enable Camera in app settings):
 
 - [ ] Preview or tracker starts without a crash
-- [ ] A gaze indicator moves when you look around
+- [ ] A gaze indicator moves when you look around (if the console floods `Map<Object?, Object?> is not a subtype of Map<String, dynamic>`, the native tracker is working and Dart is dropping events — use gazepoint_sdk 3.0.4+)
 - [ ] Confidence is > 0 when your face is visible
 - [ ] Blink flag flips when you blink
 - [ ] Stop / quit cleans up (camera light goes off)
