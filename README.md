@@ -93,7 +93,7 @@ Get started with our Flutter plugin for cross-platform development:
 
 ```yaml
 dependencies:
-  gazepoint_sdk: ^3.0.3
+  gazepoint_sdk: ^3.0.4
 ```
 
 ```dart

@@ -3,7 +3,7 @@
 Two layers, tested separately:
 
 1. **Native SDK** — the platform library + its in-repo example.
-2. **Flutter plugin** (`gazepoint_sdk` 3.0.3 on pub.dev) — one Dart API that talks to native code. Today the plugin has **Android and iOS implementations**. Web / Windows / macOS / Linux are declared in `pubspec.yaml` but the plugin platform files are not in the Flutter repo yet; those platforms are tested via the **native** examples.
+2. **Flutter plugin** (`gazepoint_sdk` 3.0.4 locally; 3.0.3 on pub.dev cannot resolve Android until 3.0.4 is published) — one Dart API that talks to native code. Today the plugin has **Android and iOS implementations**. Web / Windows / macOS / Linux are declared in `pubspec.yaml` but the plugin platform files are not in the Flutter repo yet; those platforms are tested via the **native** examples.
 
 Camera + a real face in frame is required for a meaningful pass. Simulators/emulators without a camera only prove the app **launches**.
 
@@ -36,11 +36,11 @@ flutter pub get
 
 `example/pubspec.yaml` uses `gazepoint_sdk: path: ../` so you are testing the submodule, not pub.dev.
 
-**Published 3.0.3** (what app users get): in a throwaway app, `gazepoint_sdk: ^3.0.3` then the same `flutter run` commands.
+**Published 3.0.4** (after the next pub.dev tag): `gazepoint_sdk: ^3.0.4`. Do not test Android against 3.0.3 — it depends on JitPack `2.1.0`, which never built.
 
 | Command | What it tests | Expectation today |
 |---------|----------------|-------------------|
-| `flutter emulators --launch Pixel_10_Pro_XL` then `flutter run -d android` | Flutter → JitPack Android `2.1.0` | Should work on a device/emulator with a camera |
+| `flutter emulators --launch Pixel_10_Pro_XL` then `flutter run -d android` | Flutter → JitPack Android `2.1.1`; example `compileSdk 37` | Should work on a device/emulator with a camera |
 | Unlock iPhone, then `flutter run -d 00008150-00165D9E1169401C` | Flutter → iOS snapshot | Physical device; camera required |
 | `flutter emulators --launch apple_ios_simulator` then `flutter run -d iPhone` | Flutter iOS compile | Launch only unless you inject a camera |
 | `flutter run -d macos` | Flutter macOS plugin | **Will fail** until `macos/Classes` plugin code exists |

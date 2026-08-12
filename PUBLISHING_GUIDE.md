@@ -567,7 +567,8 @@ git push origin 2.0.0
 ### JitPack Issues
 
 **Build fails on JitPack**
-- Check logs at: `https://jitpack.io/com/github/Tareq-Ghassan/GazePointSDK-Android/2.0.0/build.log`
+- Check logs at: `https://jitpack.io/com/github/Tareq-Ghassan/GazePointSDK-Android/2.1.1/build.log`
+- Tags `2.0.0` and `2.1.0` are JitPack `Error`. Use **2.1.1**.
 - Common fix: Ensure `build.gradle` has correct `maven-publish` configuration
 
 **404 when trying to use library**
@@ -628,7 +629,7 @@ git push origin 2.0.0
 **Flutter:**
 ```yaml
 dependencies:
-  gazepoint_sdk: ^3.0.3
+  gazepoint_sdk: ^3.0.4
 ```
 
 **iOS CocoaPods:**

@@ -33,4 +33,4 @@ Releasing one SDK does not require updating the others. See [`.agents/WORKFLOW_R
 
 Full matrix (Flutter on every platform + each native example): **[TESTING.md](TESTING.md)**.
 
-Published Flutter pin: `gazepoint_sdk: ^3.0.3`.
+Published Flutter pin: `gazepoint_sdk: ^3.0.4` (3.0.3 cannot resolve Android on JitPack).
