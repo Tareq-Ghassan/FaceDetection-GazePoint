@@ -41,9 +41,9 @@ flutter pub get
 | Command | What it tests | Expectation today |
 |---------|----------------|-------------------|
 | `flutter emulators --launch Pixel_10_Pro_XL` then `flutter run -d android` | Flutter → JitPack Android `2.1.1`; example `compileSdk 37` and JVM 17 for Java+Kotlin | Should work on a device/emulator with a camera |
-| Unlock iPhone, then `flutter run -d 00008150-00165D9E1169401C` | Flutter → iOS snapshot | Physical device; camera required |
+| Unlock iPhone, then `flutter run -d ios` | Flutter → iOS snapshot via SwiftPM (`ios/gazepoint_sdk`) | Physical device; camera required. If Xcode says a target is outside the package root, `flutter clean` first. |
 | `flutter emulators --launch apple_ios_simulator` then `flutter run -d iPhone` | Flutter iOS compile | Launch only unless you inject a camera |
-| `flutter run -d macos` | Flutter macOS plugin | **Will fail** until `macos/Classes` plugin code exists |
+| `flutter run -d macos` | Flutter macOS plugin | **Will fail** until macOS plugin sources exist under `macos/gazepoint_sdk/Sources` |
 | `flutter run -d chrome` | Flutter web plugin | **Will fail** until `lib/gazepoint_sdk_web.dart` exists |
 | `flutter run -d windows` | Flutter Windows plugin | Needs Windows **and** missing `windows/` plugin |
 | `flutter run -d linux` | Flutter Linux plugin | Needs Linux **and** missing `linux/` plugin |
