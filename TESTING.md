@@ -21,7 +21,7 @@ After Start / allow camera (the Flutter example now prompts; if you already deni
 
 Connected today: **macOS desktop**, **Chrome**, wireless **iPhone** (unlock + Developer Mode). Emulators: **Pixel 10 Pro XL**, **iOS Simulator**.
 
-Windows and Linux native (and Flutter Windows/Linux) need those operating systems.
+Windows and Linux native (and Flutter Windows/Linux) need those operating systems. This Mac cannot `flutter run -d windows` or `flutter run -d linux`.
 
 ---
 
@@ -121,6 +121,24 @@ cmake .. && make
 4. Native **iOS** example on the unlocked iPhone.
 5. Generate Flutter example hosts, then Flutter **Android** and Flutter **iPhone**.
 6. Flutter **Chrome** (`flutter run -d chrome`) and Flutter **macOS** (`flutter run -d macos`) — allow camera.
-7. Windows + Linux on those OSes (native examples first).
+7. Windows + Linux — **not on this Mac.** See [No Windows or Linux PC](#no-windows-or-linux-pc).
 
 Do not treat a green Gradle/Xcode **build** as a gaze-tracking pass. The checklist at the top is the product test.
+
+---
+
+## No Windows or Linux PC
+
+`flutter run -d windows` and `flutter run -d linux` only work **on that OS**. Flutter does not cross-compile a runnable Windows/Linux app from macOS. The Flutter plugin also has **no Windows or Linux implementation yet** (`pubspec.yaml` declares them; the plugin folders are empty). On a real Windows/Linux machine, test the **native** examples first.
+
+| Goal | What to use | Camera / gaze pass? |
+|------|-------------|---------------------|
+| Skip for now | Finish Android, iOS, macOS, Chrome on this Mac | — |
+| Compile-only | GitHub Actions (or a cloud VM) running `dotnet build` / `cmake` | No |
+| Linux GUI + webcam | [UTM](https://mac.getutm.app/) Ubuntu VM (Apple Silicon: Ubuntu ARM). Pass through a **USB** webcam | Maybe |
+| Windows GUI + webcam | UTM **Windows 11 ARM** (Apple Silicon) or a cheap Windows PC | Maybe; ARM + camera is flaky |
+| Reliable product test | A real Windows 10/11 PC and an Ubuntu machine with a webcam | Yes |
+
+UTM: install Ubuntu or Windows 11 ARM, clone the matching SDK repo (or this umbrella with submodules), then run the native example from [§2](#2-native-sdks-independent-of-flutter). The Mac’s built-in camera usually does **not** appear in the VM; use a USB webcam and enable USB forwarding.
+
+GitHub Actions can prove the native example **builds**. It cannot prove gaze tracking.
