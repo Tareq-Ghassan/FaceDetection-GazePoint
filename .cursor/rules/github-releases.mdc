@@ -1,0 +1,21 @@
+---
+description: Every git tag must have a matching GitHub Release (sidebar Latest)
+alwaysApply: true
+---
+
+# GitHub Releases
+
+A **git tag** is not a GitHub **Release**. The repo sidebar **Releases → Latest** only lists Releases (`gh release create` or `softprops/action-gh-release`). Tagging for JitPack, SPM, or pub.dev does not update that UI.
+
+A tag without a Release is unfinished. After every tag push:
+
+1. Confirm the tag workflow created a Release (`permissions: contents: write` + `softprops/action-gh-release`).
+2. `gh release list --repo <owner/repo> --limit 1` — **Latest** must equal the tag you just pushed.
+3. If the job skipped it or failed, create it: `gh release create <tag> --repo <owner/repo> --generate-notes`
+
+```
+❌ git push origin v3.0.4, sidebar still shows v3.0.3
+✅ tag workflow (or gh release create) so Latest == the new tag
+```
+
+Do this in **every repo you tagged** (umbrella and each SDK). Do not re-run a pub.dev publish job just to fix the sidebar.

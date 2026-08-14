@@ -6,10 +6,12 @@ Submodules exist so **each platform is its own product**. A change in Android mu
 
 | Change | Repo | Release |
 |--------|------|---------|
-| Android library / example | GazePointSDK-Android | Tag that repo → JitPack |
-| iOS library / example | GazePointSDK-iOS | Tag that repo → SPM |
-| Flutter Dart, plugin wrappers, pubspec | GazePointSDK-Flutter | Tag `vX.Y.Z` on that repo → pub.dev |
-| Web / Windows / macOS / Linux | That SDK repo | Tag that repo |
+| Android library / example | GazePointSDK-Android | Tag that repo → JitPack **and** GitHub Release |
+| iOS library / example | GazePointSDK-iOS | Tag that repo → SPM **and** GitHub Release |
+| Flutter Dart, plugin wrappers, pubspec | GazePointSDK-Flutter | Tag `vX.Y.Z` on that repo → pub.dev **and** GitHub Release |
+| Web / Windows / macOS / Linux | That SDK repo | Tag that repo → GitHub Release |
+
+The tag workflow must create the GitHub Release (sidebar **Latest**). A tag without a Release is unfinished. See `.cursor/rules/github-releases.mdc`.
 
 - Feature branches live only in the repo that owns the files. The umbrella does not need the same branch name.
 - `.gitmodules` tracks `branch = main` for `git submodule update --remote`. That updates the umbrella lockfile SHA; it is optional and is not part of a platform release.

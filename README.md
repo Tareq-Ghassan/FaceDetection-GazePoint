@@ -163,7 +163,7 @@ FaceDetection-GazePoint/          # optional umbrella (lockfile + docs)
 └── linux/     → GazePointSDK-Linux
 ```
 
-Changing Android (or any other SDK) is a commit + tag **in that repository only**. Do not create matching branches across repos. See [`.agents/WORKFLOW_RULES.md`](.agents/WORKFLOW_RULES.md).
+Changing Android (or any other SDK) is a commit + tag **in that repository only**. The tag workflow must also create a GitHub Release (sidebar **Latest**); a tag alone does not. Do not create matching branches across repos. See [`.agents/WORKFLOW_RULES.md`](.agents/WORKFLOW_RULES.md).
 
 ---
 

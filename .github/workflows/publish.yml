@@ -8,6 +8,7 @@
 # existing pub.dev OIDC (repository FaceDetection-GazePoint) keeps working.
 #
 #   git tag v3.0.3 && git push origin v3.0.3
+# Also creates the GitHub Release (sidebar Latest). A tag alone does not.
 
 name: Publish Flutter plugin
 
@@ -21,6 +22,17 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  github-release:
+    name: GitHub Release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+
   publish-flutter:
     name: Publish Flutter → pub.dev
     runs-on: ubuntu-latest

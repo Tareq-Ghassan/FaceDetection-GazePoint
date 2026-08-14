@@ -2,6 +2,8 @@
 
 Each SDK releases **from its own GitHub repository**. Tagging this umbrella is optional and only publishes Flutter (for existing pub.dev OIDC).
 
+A **git tag is not a GitHub Release**. The sidebar **Releases → Latest** only updates when the tag workflow runs `softprops/action-gh-release` (`permissions: contents: write`), or when you run `gh release create <tag> --generate-notes`. After every tag, `gh release list --repo <owner/repo> --limit 1` must show **Latest** equal to that tag. Do not re-run pub.dev publish just to fix the sidebar.
+
 ## Android only
 
 ```bash
