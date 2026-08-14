@@ -122,9 +122,9 @@ if (await tracker.requestCameraPermission()) {
 Each platform has its own native SDK. Preview, white face boxes, and `"Multiple faces detected"` are **SDK APIs** (`GazeCamera`), not example-only UI.
 
 - 🤖 **Android** `2.2.0` — [GazePointSDK-Android](https://github.com/Tareq-Ghassan/GazePointSDK-Android) (`GazeCamera` + `GazePreviewView`)
-- 🍎 **iOS** `2.2.0` — [GazePointSDK-iOS](https://github.com/Tareq-Ghassan/GazePointSDK-iOS) (`GazeCamera` + `GazePreviewView`)
+- 🍎 **iOS** `2.2.1` — [GazePointSDK-iOS](https://github.com/Tareq-Ghassan/GazePointSDK-iOS) (`GazeCamera` + `GazePreviewView`)
 - 🌐 **Web** `2.1.0` — [GazePointSDK-Web](https://github.com/Tareq-Ghassan/GazePointSDK-Web) (`GazeCamera`)
-- 🖥️ **macOS** `2.2.0` — [GazePointSDK-macOS](https://github.com/Tareq-Ghassan/GazePointSDK-macOS) (`GazeCamera` + `GazePreviewView`)
+- 🖥️ **macOS** `2.2.1` — [GazePointSDK-macOS](https://github.com/Tareq-Ghassan/GazePointSDK-macOS) (`GazeCamera` + `GazePreviewView`)
 - 🪟 **Windows** — [GazePointSDK-Windows](https://github.com/Tareq-Ghassan/GazePointSDK-Windows)
 - 🐧 **Linux** — [GazePointSDK-Linux](https://github.com/Tareq-Ghassan/GazePointSDK-Linux)
 

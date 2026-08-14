@@ -634,12 +634,12 @@ dependencies:
 
 **iOS CocoaPods:**
 ```ruby
-pod 'GazePointSDK', :git => 'https://github.com/Tareq-Ghassan/GazePointSDK-iOS.git', :tag => '2.2.0'
+pod 'GazePointSDK', :git => 'https://github.com/Tareq-Ghassan/GazePointSDK-iOS.git', :tag => '2.2.1'
 ```
 
 **iOS SPM:**
 ```swift
-.package(url: "https://github.com/Tareq-Ghassan/GazePointSDK-iOS.git", from: "2.2.0")
+.package(url: "https://github.com/Tareq-Ghassan/GazePointSDK-iOS.git", from: "2.2.1")
 ```
 
 **Android JitPack:**

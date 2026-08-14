@@ -3,7 +3,7 @@
 Two layers, tested separately:
 
 1. **Native SDK** — the platform library + its in-repo example.
-2. **Flutter plugin** (`gazepoint_sdk` 3.0.4 locally; 3.0.3 on pub.dev cannot resolve Android until 3.0.4 is published) — Dart API with **Android, iOS, Web, and macOS** implementations. Windows / Linux are still declared in `pubspec.yaml` without plugin files; test those via the **native** examples.
+2. **Flutter plugin** (`gazepoint_sdk` **3.0.4** on pub.dev) — Dart API with **Android, iOS, Web, and macOS** implementations. Windows / Linux are still declared in `pubspec.yaml` without plugin files; test those via the **native** examples.
 
 Camera + a real face in frame is required for a meaningful pass. Simulators/emulators without a camera only prove the app **launches**.
 
@@ -38,7 +38,7 @@ flutter pub get
 
 `example/pubspec.yaml` uses `gazepoint_sdk: path: ../` so you are testing the submodule, not pub.dev.
 
-**Published 3.0.4** (after the next pub.dev tag): `gazepoint_sdk: ^3.0.4`. Do not test Android against 3.0.3 — it depends on JitPack `2.1.0`, which never built.
+**Published 3.0.4:** `gazepoint_sdk: ^3.0.4`. Do not test Android against 3.0.3 — it depends on JitPack `2.1.0`, which never built.
 
 | Command | What it tests | Expectation today |
 |---------|----------------|-------------------|
@@ -46,7 +46,7 @@ flutter pub get
 | Unlock iPhone, then `flutter run -d ios` | Flutter → iOS snapshot via SwiftPM (`ios/gazepoint_sdk`) | Prefer **USB**. Example Runner target and `ios/Flutter/*.xcconfig` must be 16.0 (not only the project). If you see “requires 16.0 but this target supports 13.0”, run `flutter clean && flutter build ios --config-only` then run again. Wireless debug on iOS 26 often stays on a white launch screen until the Dart VM Service attaches. |
 | `flutter emulators --launch apple_ios_simulator` then `flutter run -d iPhone` | Flutter iOS compile | Launch only unless you inject a camera |
 | `flutter run -d macos` | Flutter macOS plugin (`macos/gazepoint_sdk` snapshot of `GazeCamera`) | Allow Camera in System Settings. Example `MACOSX_DEPLOYMENT_TARGET` must be 13.0. |
-| `flutter run -d chrome` | Flutter web plugin (`gazepoint_sdk_web.dart`, MediaPipe Face Mesh CDN) | Allow camera in Chrome. Needs localhost or HTTPS. |
+| `flutter run -d chrome` | Flutter web plugin (`gazepoint_sdk_web.dart`, MediaPipe Face Mesh CDN) | Allow camera in Chrome. Needs localhost or HTTPS. Live preview is an `HtmlElementView` registered as `gazepoint_sdk/preview`. |
 | `flutter run -d windows` | Flutter Windows plugin | Needs a Windows PC **and** a plugin implementation (`flutter/windows/` is empty). Native Windows SDK is still a TODO stub. |
 | `flutter run -d linux` | Flutter Linux plugin | Needs a Linux PC **and** a plugin implementation (`flutter/linux/` is empty). Native Linux SDK has a header but no `src/*.cpp`. |
 
@@ -70,7 +70,7 @@ cd android/example
 # Android Studio: File → Open → android/example  → Run on Pixel 10 Pro XL or a phone
 ```
 
-### iOS `2.2.0` — SPM example
+### iOS `2.2.1` — SPM example
 
 ```bash
 open ios/Example/ios_example.xcodeproj
@@ -88,7 +88,7 @@ cd web/example && npm start
 
 `GazeCamera` draws the preview and white face boxes. Run from `example/` like the other SDKs; webpack in the parent folder serves this page and `/dist`.
 
-### macOS `2.2.0`
+### macOS `2.2.1`
 
 ```bash
 cd macos/example
