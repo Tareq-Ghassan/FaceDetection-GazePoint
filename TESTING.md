@@ -12,6 +12,8 @@ Camera + a real face in frame is required for a meaningful pass. Simulators/emul
 After Start / allow camera (the Flutter example now prompts; if you already denied, enable Camera in app settings):
 
 - [ ] Preview or tracker starts without a crash
+- [ ] Native Android / iOS / Web / macOS: white outline on **every** face (tight to the face, not floating in empty space); status **Multiple faces detected** when two people are in frame; **no gaze point** until only one face remains
+- [ ] Flip camera switches front / back (or the next Mac camera)
 - [ ] A gaze indicator moves when you look around (if the console floods `Map<Object?, Object?> is not a subtype of Map<String, dynamic>`, the native tracker is working and Dart is dropping events — use gazepoint_sdk 3.0.4+)
 - [ ] Confidence is > 0 when your face is visible
 - [ ] Blink flag flips when you blink
@@ -60,7 +62,7 @@ cd flutter/example && flutter analyze
 
 From the umbrella checkout (submodules already present):
 
-### Android `2.1.1` — JitPack + local example
+### Android `2.2.0` — JitPack + local example
 
 ```bash
 cd android/example
@@ -68,7 +70,7 @@ cd android/example
 # Android Studio: File → Open → android/example  → Run on Pixel 10 Pro XL or a phone
 ```
 
-### iOS `2.1.1` — SPM example
+### iOS `2.2.0` — SPM example
 
 ```bash
 open ios/Example/ios_example.xcodeproj
@@ -77,17 +79,16 @@ open ios/Example/ios_example.xcodeproj
 
 CI `swift build` is the wrong default (macOS, no UIKit). The example is the real test.
 
-### Web `v1.0.0`
+### Web `2.1.0`
 
 ```bash
-cd web && npm install && npm run build
-cd example && python3 -m http.server 8000
-# Chrome → http://localhost:8000  → allow camera
+cd web && npm install && npm run build && npm run dev
+# Chrome → http://localhost:8080  → Start Tracking → allow camera
 ```
 
-If `index.html` still uses `DemoGazeTracker`, point it at `../dist` as the example README describes.
+`GazeCamera` draws the preview and white face boxes. Do not serve `example/index.html` with a static server that cannot load `dist/index.esm.js`.
 
-### macOS `v1.0.0`
+### macOS `2.2.0`
 
 ```bash
 cd macos/example
@@ -95,6 +96,8 @@ swift build
 swift run
 # System Settings → Privacy & Security → Camera → allow Terminal/Xcode
 ```
+
+AppKit window hosts `GazePreviewView`. The title bar shows `statusText` (`Multiple faces detected` when two faces are in frame).
 
 ### Windows `v1.0.0` (Windows machine)
 

@@ -97,6 +97,7 @@ FaceDetection-GazePoint/                 # Main umbrella repository
 **Key Features**:
 - 30 FPS tracking
 - 468 facial landmarks
+- `GazeCamera` + `GazePreviewView` (opt-in preview, white boxes on every face; gaze only when one face)
 - ProGuard/R8 optimizations
 - JitPack publishing ready
 
@@ -117,6 +118,7 @@ FaceDetection-GazePoint/                 # Main umbrella repository
 **Key Features**:
 - 30 FPS tracking
 - Native Vision landmarks
+- `GazeCamera` + `GazePreviewView` (opt-in preview, white boxes on every face; gaze only when one face)
 - Metal acceleration
 - ARKit integration (future)
 
@@ -139,6 +141,7 @@ FaceDetection-GazePoint/                 # Main umbrella repository
 **Key Features**:
 - WebGL acceleration
 - 468 facial landmarks from MediaPipe
+- `GazeCamera` (opt-in preview, white boxes, multi-face status; gaze only when one face)
 - WebRTC camera access
 - WebAssembly for performance-critical code
 - Works on mobile browsers
@@ -189,6 +192,7 @@ FaceDetection-GazePoint/                 # Main umbrella repository
 
 **Key Features**:
 - Metal acceleration
+- `GazeCamera` + `GazePreviewView` (opt-in preview, white boxes on every face; gaze only when one face)
 - AppKit and SwiftUI support
 - Native macOS performance
 - Catalyst app support
@@ -410,30 +414,44 @@ This same code works on **all 6 platforms** (Android, iOS, Web, Windows, macOS, 
 ### Native Android
 
 ```kotlin
-import com.gazepoint.sdk.GazeTracker
+import com.gazepoint.sdk.camera.GazeCamera
+import com.gazepoint.sdk.camera.GazeCameraOptions
 
-val gazeTracker = GazeTracker(context)
-val result = gazeTracker.calculateGazePoint(face)
+val camera = GazeCamera(this) { frame ->
+    println(frame.statusText) // "Multiple faces detected" when faceCount > 1 (gaze is null then)
+}
+camera.configure(GazeCameraOptions(previewEnabled = true, showFaceBoxes = true))
+camera.attachPreview(previewView)
+camera.start(this)
 ```
 
-### Native iOS/macOS
+### Native iOS / macOS
 
 ```swift
 import GazePointSDK
 
-let gazeTracker = GazeTracker()
-try await gazeTracker.startTracking()
+let camera = GazeCamera()
+camera.options = GazeCameraOptions(previewEnabled: true, showFaceBoxes: true)
+camera.onFrame = { frame in
+    print(frame.statusText)
+}
+view.addSubview(camera.previewView)
+camera.start()
 ```
 
 ### Native Web
 
 ```typescript
-import { GazeTracker } from '@gazepoint/sdk-web';
+import { GazeCamera } from '@gazepoint/sdk-web';
 
-const tracker = new GazeTracker({ onGazeUpdate: (result) => {
-    console.log(result.gazePoint);
-}});
-await tracker.start();
+const camera = new GazeCamera({
+  container: document.getElementById('preview'),
+  previewEnabled: true,
+  showFaceBoxes: true,
+  onFrame: (frame) => console.log(frame.statusText, frame.gaze?.gazePoint),
+});
+await camera.initialize();
+await camera.start();
 ```
 
 ### Native Windows

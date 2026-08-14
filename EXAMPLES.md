@@ -14,6 +14,8 @@ Each example lives **in that platform's SDK repository**, so you can clone one r
 
 If you already cloned this umbrella with `--recurse-submodules`, the same folders are at `flutter/example`, `android/example`, `ios/Example`, and so on.
 
+Native Android, iOS, Web, and macOS demos use **`GazeCamera`** from that SDK: live preview, a white outline on every face, and `"Multiple faces detected"` when more than one face is in frame. Gaze (green indicator) is only calculated when exactly one face is present. Metrics-only apps set `previewEnabled` to false.
+
 ## Quick start (from the umbrella checkout)
 
 ```bash
@@ -28,6 +30,14 @@ cd android/example && ./gradlew :app:assembleDebug
 
 # iOS
 open ios/Example/ios_example.xcodeproj
+
+# Web (bundled GazeCamera example)
+cd web && npm install && npm run dev
+# Chrome → http://localhost:8080 → Start Tracking → allow camera
+
+# macOS (AppKit GazeCamera window)
+cd macos/example && swift build && swift run
+# System Settings → Privacy & Security → Camera → allow Terminal/Xcode
 ```
 
 Releasing one SDK does not require updating the others. See [`.agents/WORKFLOW_RULES.md`](.agents/WORKFLOW_RULES.md).

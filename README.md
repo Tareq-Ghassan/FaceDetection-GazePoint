@@ -52,13 +52,16 @@ A **gaze point** represents where a user is looking at a specific moment in time
 ### Core Capabilities
 
 - 🎯 **Real-time Gaze Tracking** - 30 FPS tracking with sub-100ms latency
+- 📹 **Opt-in live preview** - `GazeCamera` / `GazePreviewView` in each native SDK (disable for metrics-only apps)
+- ⬜ **Face bounding boxes** - White outline on every detected face, aligned to the face
+- 👥 **Multi-face status** - `"Multiple faces detected"` when more than one face is in frame; **gaze is not calculated** until only one face remains
 - 🧠 **Head Pose Compensation** - Accurate tracking regardless of head position
 - 👁️ **Blink Detection** - Real-time eye state monitoring using Eye Aspect Ratio
 - 📐 **Kalman Filtering** - Smooth, natural gaze point movement
 - 🎨 **Adaptive Smoothing** - Velocity-based smoothing for optimal precision
 - 🎲 **Multi-Point Calibration** - Improve accuracy with 3-9 calibration points
 - 📊 **Performance Monitoring** - Built-in FPS, latency, and dropped frame tracking
-- 👥 **Multi-Face Support** - Detect and track multiple faces simultaneously
+- 👥 **Multi-Face Support** - Detect every face and draw a box on each; gaze is only estimated when exactly one face is in frame
 
 ### Platform-Specific Technologies
 
@@ -79,7 +82,7 @@ A **gaze point** represents where a user is looking at a specific moment in time
 | 🍎 **iOS** | 16.0+ | Swift, Vision, AVFoundation | [SPM](https://github.com/Tareq-Ghassan/GazePointSDK-iOS) / [CocoaPods](https://cocoapods.org) | ✅ Stable |
 | 🌐 **Web** | Modern Browsers | TypeScript, MediaPipe, TF.js | [NPM](https://www.npmjs.com/) | ✅ Stable |
 | 🪟 **Windows** | 10 (1903+) | C#, ML.NET, .NET 6+ | [NuGet](https://www.nuget.org/) | ✅ Stable |
-| 🖥️ **macOS** | 12.0+ | Swift, Vision, AVFoundation | [SPM](https://github.com/Tareq-Ghassan/GazePointSDK-macOS) | ✅ Stable |
+| 🖥️ **macOS** | 13.0+ | Swift, Vision, AVFoundation | [SPM](https://github.com/Tareq-Ghassan/GazePointSDK-macOS) | ✅ Stable |
 | 🐧 **Linux** | Ubuntu 20.04+ | C++, OpenCV, dlib | Source | ✅ Stable |
 | 🎯 **Flutter** | 3.38.4+ | Dart 3.6+; Android/iOS/macOS channels + Dart web (MediaPipe) | [pub.dev](https://pub.dev/packages/gazepoint_sdk) | ✅ Stable |
 
@@ -116,14 +119,16 @@ if (await tracker.requestCameraPermission()) {
 
 ### Native Platforms
 
-Each platform has its own native SDK implementation:
+Each platform has its own native SDK. Preview, white face boxes, and `"Multiple faces detected"` are **SDK APIs** (`GazeCamera`), not example-only UI.
 
-- 🤖 **Android** - [GazePointSDK-Android](https://github.com/Tareq-Ghassan/GazePointSDK-Android)
-- 🍎 **iOS** - [GazePointSDK-iOS](https://github.com/Tareq-Ghassan/GazePointSDK-iOS)
-- 🌐 **Web** - [GazePointSDK-Web](https://github.com/Tareq-Ghassan/GazePointSDK-Web)
-- 🪟 **Windows** - [GazePointSDK-Windows](https://github.com/Tareq-Ghassan/GazePointSDK-Windows)
-- 🖥️ **macOS** - [GazePointSDK-macOS](https://github.com/Tareq-Ghassan/GazePointSDK-macOS)
-- 🐧 **Linux** - [GazePointSDK-Linux](https://github.com/Tareq-Ghassan/GazePointSDK-Linux)
+- 🤖 **Android** `2.2.0` — [GazePointSDK-Android](https://github.com/Tareq-Ghassan/GazePointSDK-Android) (`GazeCamera` + `GazePreviewView`)
+- 🍎 **iOS** `2.2.0` — [GazePointSDK-iOS](https://github.com/Tareq-Ghassan/GazePointSDK-iOS) (`GazeCamera` + `GazePreviewView`)
+- 🌐 **Web** `2.1.0` — [GazePointSDK-Web](https://github.com/Tareq-Ghassan/GazePointSDK-Web) (`GazeCamera`)
+- 🖥️ **macOS** `2.2.0` — [GazePointSDK-macOS](https://github.com/Tareq-Ghassan/GazePointSDK-macOS) (`GazeCamera` + `GazePreviewView`)
+- 🪟 **Windows** — [GazePointSDK-Windows](https://github.com/Tareq-Ghassan/GazePointSDK-Windows)
+- 🐧 **Linux** — [GazePointSDK-Linux](https://github.com/Tareq-Ghassan/GazePointSDK-Linux)
+
+Flutter wraps those native SDKs later. Implement camera/preview in `android/`, `ios/`, `web/`, `macos/` — not in `flutter/`.
 
 ---
 
