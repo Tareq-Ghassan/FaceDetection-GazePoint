@@ -122,6 +122,10 @@ publish_to: 'https://pub.dev'
 
 ### Step 4: Publish
 
+Preferred path: tag `vX.Y.Z` on [GazePointSDK-Flutter](https://github.com/Tareq-Ghassan/GazePointSDK-Flutter). GitHub Actions publishes to pub.dev **and** creates the GitHub Release (sidebar **Latest**). A git tag alone does not update the sidebar. See [`.agents/RELEASE.md`](.agents/RELEASE.md).
+
+Manual publish (local only):
+
 ```bash
 # Final dry run
 flutter pub publish --dry-run
@@ -130,7 +134,7 @@ flutter pub publish --dry-run
 flutter pub publish
 ```
 
-You'll be asked to confirm. Type `y` to proceed.
+You'll be asked to confirm. Type `y` to proceed. After a local publish, still create the GitHub Release (`gh release create vX.Y.Z --generate-notes`) if Actions did not.
 
 ### Step 5: Verify Publication
 
@@ -219,6 +223,8 @@ git tag 2.0.0
 git push origin 2.0.0
 ```
 
+That same push creates the GitHub Release (sidebar **Latest**). A tag alone does not.
+
 #### Step 5: Publish to CocoaPods
 
 ```bash
@@ -271,7 +277,7 @@ let package = Package(
 )
 ```
 
-#### Step 2: Create GitHub Release
+#### Step 2: Tag (GitHub Release is created by Actions)
 
 ```bash
 cd ios
@@ -279,12 +285,11 @@ git tag 2.0.0
 git push origin 2.0.0
 ```
 
-Then create a release on GitHub:
-1. Go to `https://github.com/Tareq-Ghassan/GazePointSDK-iOS/releases/new`
-2. Select tag: `2.0.0`
-3. Release title: `v2.0.0`
-4. Add release notes
-5. Click "Publish release"
+Pushing the tag runs `.github/workflows/release.yml`, which publishes the GitHub Release (sidebar **Latest**). A git tag alone does not. Confirm `gh release list --repo Tareq-Ghassan/GazePointSDK-iOS --limit 1` shows this tag as Latest. If the job failed:
+
+```bash
+gh release create 2.0.0 --repo Tareq-Ghassan/GazePointSDK-iOS --generate-notes
+```
 
 #### Step 3: Verify
 
@@ -327,7 +332,7 @@ publishing {
 }
 ```
 
-#### Step 2: Create GitHub Release
+#### Step 2: Tag (GitHub Release is created by Actions)
 
 ```bash
 cd android
@@ -335,12 +340,11 @@ git tag 2.0.0
 git push origin 2.0.0
 ```
 
-Create release on GitHub:
-1. Go to `https://github.com/Tareq-Ghassan/GazePointSDK-Android/releases/new`
-2. Select tag: `2.0.0`
-3. Title: `v2.0.0`
-4. Add release notes
-5. Publish
+Pushing the tag runs `.github/workflows/release.yml`, which publishes the GitHub Release (sidebar **Latest**) and triggers JitPack. A git tag alone does not update the sidebar. Confirm `gh release list --repo Tareq-Ghassan/GazePointSDK-Android --limit 1` shows this tag as Latest. If the job failed:
+
+```bash
+gh release create 2.0.0 --repo Tareq-Ghassan/GazePointSDK-Android --generate-notes
+```
 
 #### Step 3: Trigger JitPack Build
 
@@ -603,9 +607,9 @@ git push origin 2.0.0
    ```
 
 4. **Use GitHub Releases** for all platforms:
-   - Creates a historical record
-   - Provides release notes
-   - Required for SPM and JitPack
+   - A git tag is not a Release; the tag workflow must create one (`softprops/action-gh-release`, `contents: write`)
+   - Sidebar **Latest** must match the tag you just pushed
+   - If Actions failed: `gh release create <tag> --generate-notes`
 
 ---
 
@@ -618,10 +622,10 @@ git push origin 2.0.0
 - [ ] Update CHANGELOG
 - [ ] Create git tag
 - [ ] Push to GitHub
-- [ ] Publish to pub.dev
+- [ ] Confirm GitHub Release exists (sidebar **Latest** == tag)
+- [ ] Publish to pub.dev (Flutter tag workflow)
 - [ ] Publish to CocoaPods
-- [ ] Create GitHub release (triggers JitPack)
-- [ ] Verify all installations work
+- [ ] Verify JitPack / SPM / pub.dev
 - [ ] Announce release
 
 ### Installation Commands
