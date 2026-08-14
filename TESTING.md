@@ -42,10 +42,10 @@ flutter pub get
 
 | Command | What it tests | Expectation today |
 |---------|----------------|-------------------|
-| `flutter emulators --launch Pixel_10_Pro_XL` then `flutter run -d android` | Flutter → JitPack Android `2.1.1`; example `compileSdk 37` and JVM 17 for Java+Kotlin | Should work on a device/emulator with a camera |
+| `flutter emulators --launch Pixel_10_Pro_XL` then `flutter run -d android` | Flutter → JitPack Android `2.2.0`; example `compileSdk 37` and JVM 17 for Java+Kotlin | Should work on a device/emulator with a camera |
 | Unlock iPhone, then `flutter run -d ios` | Flutter → iOS snapshot via SwiftPM (`ios/gazepoint_sdk`) | Prefer **USB**. Example Runner target and `ios/Flutter/*.xcconfig` must be 16.0 (not only the project). If you see “requires 16.0 but this target supports 13.0”, run `flutter clean && flutter build ios --config-only` then run again. Wireless debug on iOS 26 often stays on a white launch screen until the Dart VM Service attaches. |
 | `flutter emulators --launch apple_ios_simulator` then `flutter run -d iPhone` | Flutter iOS compile | Launch only unless you inject a camera |
-| `flutter run -d macos` | Flutter macOS plugin (`macos/gazepoint_sdk`, Vision + AVFoundation) | Allow Camera in System Settings. Example `MACOSX_DEPLOYMENT_TARGET` must be 12.0. |
+| `flutter run -d macos` | Flutter macOS plugin (`macos/gazepoint_sdk` snapshot of `GazeCamera`) | Allow Camera in System Settings. Example `MACOSX_DEPLOYMENT_TARGET` must be 13.0. |
 | `flutter run -d chrome` | Flutter web plugin (`gazepoint_sdk_web.dart`, MediaPipe Face Mesh CDN) | Allow camera in Chrome. Needs localhost or HTTPS. |
 | `flutter run -d windows` | Flutter Windows plugin | Needs a Windows PC **and** a plugin implementation (`flutter/windows/` is empty). Native Windows SDK is still a TODO stub. |
 | `flutter run -d linux` | Flutter Linux plugin | Needs a Linux PC **and** a plugin implementation (`flutter/linux/` is empty). Native Linux SDK has a header but no `src/*.cpp`. |
@@ -82,11 +82,11 @@ CI `swift build` is the wrong default (macOS, no UIKit). The example is the real
 ### Web `2.1.0`
 
 ```bash
-cd web && npm install && npm run build && npm run dev
-# Chrome → http://localhost:8080  → Start Tracking → allow camera
+cd web/example && npm start
+# Chrome → http://localhost:8080  → Start → allow camera
 ```
 
-`GazeCamera` draws the preview and white face boxes. Do not serve `example/index.html` with a static server that cannot load `dist/index.esm.js`.
+`GazeCamera` draws the preview and white face boxes. Run from `example/` like the other SDKs; webpack in the parent folder serves this page and `/dist`.
 
 ### macOS `2.2.0`
 
@@ -97,7 +97,7 @@ swift run
 # System Settings → Privacy & Security → Camera → allow Terminal/Xcode
 ```
 
-AppKit window hosts `GazePreviewView`. The title bar shows `statusText` (`Multiple faces detected` when two faces are in frame).
+AppKit window hosts `GazePreviewView`. White face boxes sit on each face. A green gaze indicator appears when exactly one face is in frame. The title bar shows `statusText` (`Multiple faces detected` when two faces are in frame).
 
 ### Windows `v1.0.0` (Windows machine)
 

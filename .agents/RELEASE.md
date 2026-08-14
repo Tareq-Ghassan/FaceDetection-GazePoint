@@ -7,11 +7,11 @@ Each SDK releases **from its own GitHub repository**. Tagging this umbrella is o
 ```bash
 cd android   # or clone GazePointSDK-Android
 # commit on main
-git tag 2.1.1
-git push origin main 2.1.1
+git tag 2.2.0
+git push origin main 2.2.0
 ```
 
-JitPack: `com.github.Tareq-Ghassan:GazePointSDK-Android:2.1.1`
+JitPack: `com.github.Tareq-Ghassan:GazePointSDK-Android:2.2.0`
 
 No Flutter, iOS, or umbrella commit is required.
 
@@ -19,8 +19,8 @@ No Flutter, iOS, or umbrella commit is required.
 
 ```bash
 cd ios
-git tag 2.1.1
-git push origin main 2.1.1
+git tag 2.2.0
+git push origin main 2.2.0
 ```
 
 SPM URL: `https://github.com/Tareq-Ghassan/GazePointSDK-iOS`
@@ -35,8 +35,8 @@ SPM URL: `https://github.com/Tareq-Ghassan/GazePointSDK-iOS`
 
 ```bash
 cd flutter
-git tag v3.0.3
-git push origin main v3.0.3
+git tag v3.0.4
+git push origin main v3.0.4
 ```
 
 Android/iOS tags are **not** created.

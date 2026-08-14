@@ -23,7 +23,7 @@ Native Android, iOS, Web, and macOS demos use **`GazeCamera`** from that SDK: li
 cd flutter/example && flutter pub get && flutter run
 # Chrome: flutter run -d chrome  (allow camera; MediaPipe loads from jsDelivr)
 # iOS: prefer USB. Wireless debug can stay on a white launch screen until the Dart VM Service attaches.
-# macOS: flutter run -d macos  (allow Camera in System Settings; app target 12.0)
+# macOS: flutter run -d macos  (allow Camera in System Settings; app target 13.0)
 
 # Android (open repo root of the Android submodule)
 cd android/example && ./gradlew :app:assembleDebug
@@ -31,9 +31,9 @@ cd android/example && ./gradlew :app:assembleDebug
 # iOS
 open ios/Example/ios_example.xcodeproj
 
-# Web (bundled GazeCamera example)
-cd web && npm install && npm run dev
-# Chrome → http://localhost:8080 → Start Tracking → allow camera
+# Web
+cd web/example && npm start
+# Chrome → http://localhost:8080 → Start → allow camera
 
 # macOS (AppKit GazeCamera window)
 cd macos/example && swift build && swift run

@@ -567,8 +567,8 @@ git push origin 2.0.0
 ### JitPack Issues
 
 **Build fails on JitPack**
-- Check logs at: `https://jitpack.io/com/github/Tareq-Ghassan/GazePointSDK-Android/2.1.1/build.log`
-- Tags `2.0.0` and `2.1.0` are JitPack `Error`. Use **2.1.1**.
+- Check logs at: `https://jitpack.io/com/github/Tareq-Ghassan/GazePointSDK-Android/2.2.0/build.log`
+- Tags `2.0.0` and `2.1.0` are JitPack `Error`. Use **2.2.0**.
 - Common fix: Ensure `build.gradle` has correct `maven-publish` configuration
 
 **404 when trying to use library**
@@ -634,17 +634,17 @@ dependencies:
 
 **iOS CocoaPods:**
 ```ruby
-pod 'GazePointSDK', :git => 'https://github.com/Tareq-Ghassan/GazePointSDK-iOS.git', :tag => '2.1.1'
+pod 'GazePointSDK', :git => 'https://github.com/Tareq-Ghassan/GazePointSDK-iOS.git', :tag => '2.2.0'
 ```
 
 **iOS SPM:**
 ```swift
-.package(url: "https://github.com/Tareq-Ghassan/GazePointSDK-iOS.git", from: "2.1.1")
+.package(url: "https://github.com/Tareq-Ghassan/GazePointSDK-iOS.git", from: "2.2.0")
 ```
 
 **Android JitPack:**
 ```gradle
-implementation 'com.github.Tareq-Ghassan:GazePointSDK-Android:2.1.1'
+implementation 'com.github.Tareq-Ghassan:GazePointSDK-Android:2.2.0'
 ```
 
 ---

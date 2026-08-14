@@ -15,6 +15,7 @@ Submodules exist so **each platform is its own product**. A change in Android mu
 - `.gitmodules` tracks `branch = main` for `git submodule update --remote`. That updates the umbrella lockfile SHA; it is optional and is not part of a platform release.
 - Do **not** copy Android Kotlin into Flutter. The plugin depends on `com.github.Tareq-Ghassan:GazePointSDK-Android:<version>`. Bump that version in `flutter/android/build.gradle` only when Flutter users should pick up a new Android SDK.
 - iOS still uses a source snapshot under `flutter/ios/gazepoint_sdk/Sources/gazepoint_sdk/GazePointSDK`. Releasing GazePointSDK-iOS does not update pub.dev until that snapshot is refreshed in the Flutter repo. Swift Package Manager requires those files inside the `ios/gazepoint_sdk` package root (not `ios/Classes`).
+- macOS is the same pattern: snapshot under `flutter/macos/gazepoint_sdk/Sources/gazepoint_sdk/GazePointSDK`. Releasing GazePointSDK-macOS does not update Flutter until that snapshot is copied.
 
 ## Issues, branches, PRs
 

@@ -74,7 +74,7 @@ FaceDetection-GazePoint/                 # Main umbrella repository
 │   ├── ios/            (source snapshot of GazePointSDK-iOS)
 │   ├── lib/gazepoint_sdk_web.dart  (Dart + MediaPipe CDN; does not wrap GazePointSDK-Web)
 │   ├── windows/        (wraps windows/)
-│   ├── macos/          (Vision + AVFoundation under macos/gazepoint_sdk/Sources)
+│   ├── macos/          (source snapshot of GazePointSDK-macOS)
 │   ├── linux/          (wraps linux/)
 │   ├── example/
 │   └── pubspec.yaml
@@ -379,7 +379,7 @@ git push
 
 ### Step 4: Update Flutter Plugin
 
-The Flutter plugin in `flutter/` has Android (JitPack), iOS (source snapshot), macOS (Vision + AVFoundation under `macos/gazepoint_sdk/Sources`), and Web (`lib/gazepoint_sdk_web.dart`, MediaPipe CDN). Windows / Linux plugin implementations are still missing. The native Windows SDK is a TODO stub; the native Linux SDK has a header and no `src/*.cpp`.
+The Flutter plugin in `flutter/` has Android (JitPack), iOS (source snapshot of GazePointSDK-iOS), macOS (source snapshot of GazePointSDK-macOS), and Web (`lib/gazepoint_sdk_web.dart`, MediaPipe CDN). Windows / Linux plugin implementations are still missing. The native Windows SDK is a TODO stub; the native Linux SDK has a header and no `src/*.cpp`.
 
 ```
 flutter/
