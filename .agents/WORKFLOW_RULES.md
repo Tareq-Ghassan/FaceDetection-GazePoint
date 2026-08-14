@@ -24,7 +24,7 @@ Work in the repo that owns the files. Do not commit to `main`.
 1. Open a GitHub issue in **that** repo (not all seven unless the change really spans them).
 2. Create a branch in that repo.
 3. Push and open a pull request that references the issue (`Fixes #N`).
-4. After merge, delete the branch.
+4. After merge, **delete the branch** on the remote and locally (`git push origin --delete <branch>` then `git branch -d <branch>`). Never leave a merged branch around. Do this in every repo that had the branch.
 
 pub.dev "Report an issue" goes to GazePointSDK-Flutter. Keep that as the Flutter inbox. Native-only bugs go to the native repo.
 
